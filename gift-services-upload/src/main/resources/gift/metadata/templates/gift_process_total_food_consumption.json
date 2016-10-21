@@ -1,0 +1,126 @@
+{
+  "uid" : "gift_process_total_food_consumption",
+  "title": {
+    "EN": "Auto generated dataset for WHO-FAO GIFT processing purposes"
+  },
+  "meContent": {
+    "resourceRepresentationType": "dataset"
+  },
+  "contacts": [
+    {
+      "organization": {
+        "EN": "WHO-FAO"
+      },
+      "role": "distributor",
+      "organizationUnit": {
+        "EN": "Institut de Recherche pour le DÃ©veloppement"
+      },
+      "contactInfo": {
+        "emailAddress": "pauline.allemand@gmail.com"
+      }
+    }
+  ],
+  "dsd": {
+    "datasources": [
+      "gift_process"
+    ],
+    "cache": {
+      "storage": "postgres"
+    },
+    "contextSystem": "gift_process",
+    "columns": [
+      {
+        "dataType": "text",
+        "title": {
+          "EN": "ID Subject"
+        },
+        "key": true,
+        "id": "subject"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Food group"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_FoodGroups"
+            }
+          ]
+        },
+        "key": true,
+        "id": "group_code"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Food sub-group"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_FoodGroups"
+            }
+          ]
+        },
+        "key": true,
+        "id": "subgroup_code"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Food"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_Foods"
+            }
+          ]
+        },
+        "key": true,
+        "id": "foodex2_code"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Item"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_Items"
+            }
+          ]
+        },
+        "subject": "item",
+        "key": true,
+        "id": "item"
+      },
+      {
+        "dataType": "number",
+        "title": {
+          "EN": "Value"
+        },
+        "subject": "value",
+        "id": "value"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Unit of measure"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_UM"
+            }
+          ]
+        },
+        "subject": "um",
+        "id": "um"
+      }
+    ]
+  }
+}
