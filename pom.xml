@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.fao.gift</groupId>
+  <artifactId>gift-services</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+
+  <name>FAO GIFT</name>
+  <url>http://fenix.fao.org</url>
+
+    <modules>
+        <module>gift-services-commons</module>
+        <module>gift-services-dxf</module>
+        <module>gift-services-core</module>
+
+        <module>gift-services-upload</module>
+        <module>gift-services-dist</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <resteasy.version>3.0.19.Final</resteasy.version>
+        <orient.version>2.0.13</orient.version>
+        <jackson.version>2.8.3</jackson.version>
+        <apache.commons.version>3.3</apache.commons.version>
+        <apache.commons.csv.version>1.2</apache.commons.csv.version>
+        <apache.poi.version>3.14</apache.poi.version>
+        <postgresql.jdbc.version>9.4-1201-jdbc41</postgresql.jdbc.version>
+        <jsch.version>0.1.51</jsch.version>
+
+        <upload.manager.version>1.0-SNAPSHOT</upload.manager.version>
+        <fenix.commons.version>1.0.1-SNAPSHOT</fenix.commons.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <distributionManagement>
+        <repository>
+            <id>snapshots</id>
+            <name>fenix</name>
+            <url>http://fenixapps.fao.org/artifactory/fenix-developers</url>
+        </repository>
+    </distributionManagement>
+
+
+   <dependencies>
+	<!-- J2EE -->
+	<dependency>
+	    <groupId>javax</groupId> 
+	    <artifactId>javaee-api</artifactId>
+	    <version>7.0</version>        
+	    <scope>provided</scope>
+	</dependency>
+  </dependencies>
+</project>
