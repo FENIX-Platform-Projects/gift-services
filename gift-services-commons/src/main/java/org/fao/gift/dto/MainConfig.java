@@ -30,12 +30,6 @@ public class MainConfig implements Map<String, String> {
                 add((String)key, properties.getProperty((String) key));
     }
 
-    public void init (ServletContext servletContext) throws Exception {
-        if (servletContext!=null)
-            for (String key : Collections.list(servletContext.getInitParameterNames()))
-                add(key, servletContext.getInitParameter(key));
-    }
-
     public void init (Map<String, String> parameters) throws Exception {
         if (parameters!=null)
             for (Entry<String,String> entry : parameters.entrySet())

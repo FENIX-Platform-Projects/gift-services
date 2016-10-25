@@ -29,6 +29,8 @@
         <apache.poi.version>3.14</apache.poi.version>
         <postgresql.jdbc.version>9.4-1201-jdbc41</postgresql.jdbc.version>
         <jsch.version>0.1.51</jsch.version>
+        <google.api.version>1.22.0</google.api.version>
+        <google.api.gmail.version>v1-rev48-1.22.0</google.api.gmail.version>
 
         <upload.manager.version>1.0-SNAPSHOT</upload.manager.version>
         <fenix.commons.version>1.0.1-SNAPSHOT</fenix.commons.version>

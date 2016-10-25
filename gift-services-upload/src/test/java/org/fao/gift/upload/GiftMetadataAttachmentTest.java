@@ -6,8 +6,8 @@ import org.fao.gift.utils.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GiftBulkTest {
-    GiftBulk giftBulkManager;
+public class GiftMetadataAttachmentTest {
+    GiftMetadataAttachment giftMetadataAttachmentManager;
 
     @Before
     public void setUp() throws Exception {
@@ -16,12 +16,12 @@ public class GiftBulkTest {
         CDISupport.getInstance(UploaderConfig.class).init(this.getClass().getResourceAsStream("/org/fao/gift/config/upload.properties"));
         CDISupport.getInstance(DataSource.class).init(config.get("gift.db.url"),config.get("gift.db.usr"),config.get("gift.db.psw"));
 
-        giftBulkManager = CDISupport.getInstance(GiftBulk.class);
+        giftMetadataAttachmentManager = CDISupport.getInstance(GiftMetadataAttachment.class);
     }
 
     @Test
     public void mainLogic1() throws Exception {
-        giftBulkManager.mainLogic("000042BUR201001", this.getClass().getResourceAsStream("/test/burkina_test1.zip"));
+        giftMetadataAttachmentManager.mainLogic("000042BUR201001", "burkina_test1.zip", this.getClass().getResourceAsStream("/test/burkina_test1.zip"));
     }
 
 }

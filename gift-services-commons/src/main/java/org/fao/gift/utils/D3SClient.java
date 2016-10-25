@@ -7,15 +7,18 @@ import org.fao.fenix.commons.find.dto.filter.StandardFilter;
 import org.fao.fenix.commons.msd.dto.data.ReplicationFilter;
 import org.fao.fenix.commons.msd.dto.data.Resource;
 import org.fao.fenix.commons.msd.dto.full.*;
+import org.fao.fenix.commons.utils.JSONUtils;
+import org.fao.fenix.commons.utils.Language;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -23,6 +26,9 @@ import java.util.*;
 
 @ApplicationScoped
 public class D3SClient {
+    @Inject
+    JSONUtils jsonUtils;
+
 
     public Collection<Code> filterCodelist(String baseUrl, String uid, String version, Collection<String> codes) throws Exception {
         return filterCodelist(baseUrl, uid, version, codes, 1);
@@ -55,13 +61,72 @@ public class D3SClient {
         return response.getStatus()!=204 ? response.readEntity(new GenericType<Collection<Code>>(){}) : new LinkedList<Code>();
     }
 
+    public Resource<DSDDataset, Object[]> getDataset(String baseUrl, String uid, String version, Language language, Integer perPage, Integer page) throws Exception {
+        String responseBody = getResource(baseUrl, uid, version, language, perPage, page);
+        return JSONUtils.decode(responseBody,Resource.class, DSDDataset.class, Object[].class);
+    }
+    public Resource<DSDCodelist, Code> getCodelist(String baseUrl, String uid, String version) throws Exception {
+        String responseBody = getResource(baseUrl, uid, version, null, null, null);
+        return JSONUtils.decode(responseBody,Resource.class, DSDCodelist.class, Code.class);
+    }
+    private String getResource(String baseUrl, String uid, String version, Language language, Integer perPage, Integer page) throws Exception {
+        //Create URL
+        StringBuilder url = new StringBuilder(baseUrl).append("msd/resources/");
+        if (version==null)
+            url.append("uid/");
+        url.append(uid);
+        if (version!=null)
+            url.append('/').append(version);
+        //Create query parameters
+        Map<String,String> parameters = new HashMap<>();
+        parameters.put("dsd","true");
+        parameters.put("full","true");
+        if (language!=null)
+            parameters.put("language",language.getCode());
+        if (perPage!=null) {
+            parameters.put("perPage", perPage.toString());
+            if (page!=null)
+                parameters.put("page",page.toString());
+        }
+        //Send request
+        Response response = sendRequest(addQueryParameters(url.toString(),parameters), null, "get");
+        if (response.getStatus() != 200)
+            throw new Exception("Error from D3S loading resource");
+        //Parse responseObjectMapper
+        return response.readEntity(String.class);
+    }
 
-    public Collection<MeIdentification<DSDDataset>> retrieveMetadata(String baseUrl) throws Exception {
+    public MeIdentification<DSDDataset> getDatasetMetadata(String baseUrl, String uid, String version) throws Exception {
+        String responseBody = getMetadata(baseUrl, uid, version);
+        return JSONUtils.decode(responseBody, MeIdentification.class, DSDDataset.class);
+    }
+    private String getMetadata(String baseUrl, String uid, String version)  throws Exception {
+        //Create URL
+        StringBuilder url = new StringBuilder(baseUrl).append("msd/resources/metadata/");
+        if (version==null)
+            url.append("uid/");
+        url.append(uid);
+        if (version!=null)
+            url.append('/').append(version);
+        //Create query parameters
+        Map<String,String> parameters = new HashMap<>();
+        parameters.put("dsd","true");
+        parameters.put("full","true");
+        //Send request
+        Response response = sendRequest(addQueryParameters(url.toString(),parameters), null, "get");
+        if (response.getStatus() != 200)
+            throw new Exception("Error from D3S loading resource");
+        //Parse responseObjectMapper
+        return response.readEntity(String.class);
+    }
+
+
+    public Collection<MeIdentification<DSDDataset>> retrieveMetadata(String baseUrl, String context) throws Exception {
         //Create filter
         StandardFilter filter = new StandardFilter();
 
         FieldFilter fieldFilter = new FieldFilter();
-        fieldFilter.enumeration = Arrays.asList("oecd");
+        fieldFilter.enumeration = Arrays.asList(context);
         filter.put("dsd.contextSystem", fieldFilter);
 
         fieldFilter = new FieldFilter();
@@ -90,6 +155,7 @@ public class D3SClient {
                 throw new Exception("Error from D3S adding datasets metadata");
         }
     }
+
 
     public void updateMetadata (String baseUrl, Collection<MeIdentification<DSDDataset>> metadataList) throws Exception {
         if (metadataList==null || metadataList.size()==0)
@@ -130,6 +196,15 @@ public class D3SClient {
                 throw new Exception("Error from D3S updating codelist "+resource.getMetadata().getUid());
         }
     }
+
+    public void appendDatasetMetadata (String baseUrl, MeIdentification<DSDDataset> metadata) throws Exception {
+        //Send request
+        Response response = sendRequest(baseUrl+"msd/resources/metadata", metadata, "patch");
+        if (response.getStatus() == 204)
+            throw new NoContentException("Metadata not found: "+metadata.getUid()+(metadata.getVersion()!=null ? "-"+metadata.getVersion() : ""));
+        if (response.getStatus() != 200 && response.getStatus() != 201)
+            throw new Exception("Error from D3S updating dataset metadata last update date");
+    }
     public void updateDatasetMetadataUpdateDate (String baseUrl, String contextSystem) throws Exception {
         if (contextSystem==null)
             return;
@@ -161,10 +236,24 @@ public class D3SClient {
             throw new Exception("Error from D3S updating datasets metadata last update date");
     }
 
+    public void updateMetadata (String baseUrl, MeIdentification metadata, boolean override) throws Exception {
+        //Send request
+        Response response = sendRequest(baseUrl+"msd/resources/metadata", metadata, override ? "put" : "patch");
+        if (response.getStatus() != 200 && response.getStatus() != 201 && response.getStatus() != 204)
+            throw new Exception("Error from D3S updating datasets metadata");
+    }
+
+
+
+
+
+
     private Response sendRequest(String url, Object entity, String method) throws Exception {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);
-        return target.request(MediaType.APPLICATION_JSON_TYPE).build(method.trim().toUpperCase(), javax.ws.rs.client.Entity.json(entity)).invoke();
+        return  entity!=null ?
+                target.request(MediaType.APPLICATION_JSON_TYPE).build(method.trim().toUpperCase(), javax.ws.rs.client.Entity.json(entity)).invoke() :
+                target.request(MediaType.APPLICATION_JSON_TYPE).build(method.trim().toUpperCase()).invoke();
     }
 
     private String addQueryParameters (String url, Map<String,String> parameters) throws UnsupportedEncodingException {
@@ -198,7 +287,6 @@ public class D3SClient {
             buffer.add(segment);
         return buffer;
     }
-
 
 
 }

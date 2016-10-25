@@ -25,7 +25,9 @@ public class FileManager {
     @Inject private FileUtils fileUtils;
     @Inject private UIDUtils uidUtils;
     private File tmpFolder;
-    private HostProperties properties;
+    private HostProperties bulkRemoteProperties;
+    private HostProperties attachmentRemoteProperties;
+    private HostProperties sharedRemoteProperties;
 
 
     //Temporary folder management
@@ -56,14 +58,13 @@ public class FileManager {
         fileUtils.delete(folder);
     }
 
-
-    public File saveFile(File tmpFolder, String surveyCode, InputStream zipFileInput) throws IOException {
-        File destinationFile = new File(tmpFolder, "survey_"+surveyCode+".zip");
+    public File saveFile(File tmpFolder, String fileName, InputStream fileInput) throws IOException {
+        File destinationFile = new File(tmpFolder, fileName);
         OutputStream out = new FileOutputStream(destinationFile);
 
         byte[] buffer = new byte[1024];
         try {
-            for (int c = zipFileInput.read(buffer); c > 0; c = zipFileInput.read(buffer))
+            for (int c = fileInput.read(buffer); c > 0; c = fileInput.read(buffer))
                 out.write(buffer, 0, c);
         } finally {
             out.close();
@@ -75,8 +76,20 @@ public class FileManager {
     public void publishSurveyFile(File zipFile, String surveyCode) throws Exception {
         ChannelSftp channel = getConnection();
         try {
-            channel.cd(properties.getPath());
+            channel.cd(bulkRemoteProperties.getPath());
             uploadFile(channel,zipFile,"GIFT_Survey_"+surveyCode+".zip");
+        } finally {
+            close(channel);
+        }
+    }
+
+    public void publishMetadataAttachmentFile(File file, String metadataId) throws Exception {
+        ChannelSftp channel = getConnection();
+        try {
+            channel.cd(attachmentRemoteProperties.getPath());
+            mkDir(metadataId, channel);
+            channel.cd(metadataId);
+            uploadFile(channel,file,file.getName());
         } finally {
             close(channel);
         }
@@ -88,8 +101,8 @@ public class FileManager {
     //SFTP utils
 
     private void initSFTP() throws Exception {
-        if (properties==null)
-            properties = new HostProperties(
+        if (bulkRemoteProperties ==null)
+            bulkRemoteProperties = new HostProperties(
                     null,
                     config.get("gift.remote.host"),
                     new Integer(config.get("gift.remote.port")),
@@ -97,13 +110,31 @@ public class FileManager {
                     config.get("gift.remote.psw"),
                     config.get("gift.remote.path.survey")
             );
+        if (attachmentRemoteProperties ==null)
+            attachmentRemoteProperties = new HostProperties(
+                    null,
+                    config.get("gift.remote.host"),
+                    new Integer(config.get("gift.remote.port")),
+                    config.get("gift.remote.usr"),
+                    config.get("gift.remote.psw"),
+                    config.get("gift.remote.path.metadata.attachment")
+            );
+        if (sharedRemoteProperties==null)
+            sharedRemoteProperties = new HostProperties(
+                    null,
+                    config.get("gift.remote.host"),
+                    new Integer(config.get("gift.remote.port")),
+                    config.get("gift.remote.usr"),
+                    config.get("gift.remote.psw"),
+                    config.get("gift.remote.path.shared")
+            );
     }
 
     private ChannelSftp getConnection() throws Exception {
         initSFTP();
 
-        Session session = new JSch().getSession(properties.getUser(), properties.getHost(), properties.getPort());
-        session.setPassword(properties.getPassword());
+        Session session = new JSch().getSession(bulkRemoteProperties.getUser(), bulkRemoteProperties.getHost(), bulkRemoteProperties.getPort());
+        session.setPassword(bulkRemoteProperties.getPassword());
         Properties config = new Properties();
         config.put("StrictHostKeyChecking", "no");
         session.setConfig(config);

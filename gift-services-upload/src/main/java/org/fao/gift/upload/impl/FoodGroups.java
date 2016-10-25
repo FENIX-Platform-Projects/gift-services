@@ -2,7 +2,7 @@ package org.fao.gift.upload.impl;
 
 import org.fao.ess.uploader.core.init.UploaderConfig;
 import org.fao.gift.upload.dto.Queries;
-import org.fao.gift.upload.utils.D3SClient;
+import org.fao.gift.utils.D3SClient;
 import org.fao.fenix.commons.msd.dto.data.Resource;
 import org.fao.fenix.commons.msd.dto.full.Code;
 import org.fao.fenix.commons.msd.dto.full.DSDCodelist;

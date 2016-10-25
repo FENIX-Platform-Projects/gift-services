@@ -1,22 +1,18 @@
 package org.fao.gift.upload.impl;
 
 import org.fao.ess.uploader.core.init.UploaderConfig;
+import org.fao.fenix.commons.msd.dto.full.*;
+import org.fao.fenix.commons.msd.dto.type.DocumentType;
 import org.fao.gift.upload.dto.Items;
 import org.fao.gift.upload.dto.MetadataTemplates;
-import org.fao.gift.upload.utils.D3SClient;
-import org.fao.fenix.commons.msd.dto.full.DSDDataset;
-import org.fao.fenix.commons.msd.dto.full.MeIdentification;
-import org.fao.fenix.commons.msd.dto.full.MeMaintenance;
-import org.fao.fenix.commons.msd.dto.full.SeUpdate;
+import org.fao.gift.utils.D3SClient;
 import org.fao.fenix.commons.utils.FileUtils;
 import org.fao.fenix.commons.utils.Groups;
 import org.fao.fenix.commons.utils.JSONUtils;
 
 import javax.inject.Inject;
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
+import java.util.*;
 
 public class MetadataManager {
 
@@ -24,6 +20,55 @@ public class MetadataManager {
     @Inject private FileUtils fileUtils;
     @Inject private D3SClient d3SClient;
 
+    public String getMetadataUid(String surveyCode) {
+        return "gift_"+surveyCode;
+    }
+
+    public String createMetadataAttachmentLink(String surveyCode, String fileName) {
+        return config.get("gift.remote.url.prefix.metadata.attachment")+'/'+getMetadataUid(surveyCode)+'/'+fileName;
+    }
+
+    public void updateMetadataAttachments(String surveyCode, String fileName) throws Exception {
+        String d3sBaseURL = config.get("gift.d3s.url");
+        d3sBaseURL = d3sBaseURL + (d3sBaseURL.charAt(d3sBaseURL.length() - 1) != '/' ? "/" : "");
+
+        //Retrieve existing meDocument by link or create a new one
+        String link = createMetadataAttachmentLink(surveyCode, fileName);
+        MeIdentification<DSDDataset> existingMetadata = loadSurveyMetadata(surveyCode);
+        Collection<MeDocuments> documents = existingMetadata.getMeDocuments();
+        if (documents==null)
+            documents = new LinkedList<>();
+        MeDocuments meDocuments = null;
+        for (MeDocuments document : documents)
+            if (document.getDocument()!=null && link.equalsIgnoreCase(document.getDocument().getLink()))
+                meDocuments = document;
+        if (meDocuments==null) {
+            documents.add(meDocuments = new MeDocuments());
+            OjCitation document = new OjCitation();
+            meDocuments.setDocument(document);
+            document.setDocumentKind(DocumentType.other);
+            Map<String,String> title = new HashMap<>();
+            title.put("EN", fileName);
+            document.setTitle(title);
+        }
+        //Update date
+        OjCitation document = meDocuments.getDocument();
+        document.setDate(new Date());
+        //Save metadata links information
+        MeIdentification<DSDDataset> metadata = new MeIdentification<>();
+        metadata.setUid(existingMetadata.getUid());
+        metadata.setVersion(existingMetadata.getVersion());
+        metadata.setMeDocuments(documents);
+        d3SClient.updateMetadata(d3sBaseURL, metadata, false);
+    }
+
+    public MeIdentification<DSDDataset> loadSurveyMetadata(String surveyCode) throws Exception {
+        String d3sBaseURL = config.get("gift.d3s.url");
+        d3sBaseURL = d3sBaseURL + (d3sBaseURL.charAt(d3sBaseURL.length() - 1) != '/' ? "/" : "");
+
+        //load metadata
+        return d3SClient.getDatasetMetadata(d3sBaseURL, getMetadataUid(surveyCode), null);
+    }
 
     public void updateSurveyMetadata(String surveyCode) throws Exception {
         String d3sBaseURL = config.get("gift.d3s.url");
@@ -31,7 +76,7 @@ public class MetadataManager {
 
         //Create metadata bean
         MeIdentification<DSDDataset> metadata = new MeIdentification<>();
-        metadata.setUid("gift_"+surveyCode);
+        metadata.setUid(getMetadataUid(surveyCode));
         MeMaintenance meMaintenance = new MeMaintenance();
         metadata.setMeMaintenance(meMaintenance);
         SeUpdate seUpdate = new SeUpdate();
@@ -46,7 +91,7 @@ public class MetadataManager {
         d3sBaseURL = d3sBaseURL + (d3sBaseURL.charAt(d3sBaseURL.length() - 1) != '/' ? "/" : "");
 
         Collection<MeIdentification<DSDDataset>> newMetadatyaList = createMetadata(survey);
-        Collection<MeIdentification<DSDDataset>> existingMetadatyaList = loadExistingMetadata(d3sBaseURL);
+        Collection<MeIdentification<DSDDataset>> existingMetadatyaList = loadExistingProcessMetadata(d3sBaseURL);
         Groups<MeIdentification<DSDDataset>> metadataGroups = new Groups(newMetadatyaList, existingMetadatyaList);
 
         d3SClient.deleteMetadata(d3sBaseURL, metadataGroups.update);
@@ -73,7 +118,7 @@ public class MetadataManager {
         return metadataInstances;
     }
 
-    private Collection<MeIdentification<DSDDataset>> loadExistingMetadata (String d3sBaseURL) throws Exception {
+    private Collection<MeIdentification<DSDDataset>> loadExistingProcessMetadata(String d3sBaseURL) throws Exception {
         return d3SClient.retrieveMetadata(d3sBaseURL, "gift_process");
     }
 
