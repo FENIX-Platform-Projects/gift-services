@@ -47,7 +47,7 @@ public class GiftShared implements PostUpload {
         try {
             File file = fileManager.saveFile(tmpFolder, fileName, zipFileInput);
             //Transfer source file for bulk download
-            fileManager.publishMetadataAttachmentFile(file, metadataManager.getMetadataUid(surveyCode));
+            fileManager.publishMetadataAttachmentFile(file, surveyCode);
             //Override existing metadata link information
             metadataManager.updateMetadataAttachments(surveyCode, fileName);
         } catch (Exception ex) {

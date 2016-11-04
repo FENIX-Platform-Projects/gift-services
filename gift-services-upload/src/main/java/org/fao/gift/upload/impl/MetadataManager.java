@@ -20,12 +20,9 @@ public class MetadataManager {
     @Inject private FileUtils fileUtils;
     @Inject private D3SClient d3SClient;
 
-    public String getMetadataUid(String surveyCode) {
-        return "gift_"+surveyCode;
-    }
 
     public String createMetadataAttachmentLink(String surveyCode, String fileName) {
-        return config.get("gift.remote.url.prefix.metadata.attachment")+'/'+getMetadataUid(surveyCode)+'/'+fileName;
+        return config.get("gift.remote.url.prefix.metadata.attachment")+'/'+surveyCode+'/'+fileName;
     }
 
     public void updateMetadataAttachments(String surveyCode, String fileName) throws Exception {
@@ -67,7 +64,7 @@ public class MetadataManager {
         d3sBaseURL = d3sBaseURL + (d3sBaseURL.charAt(d3sBaseURL.length() - 1) != '/' ? "/" : "");
 
         //load metadata
-        return d3SClient.getDatasetMetadata(d3sBaseURL, getMetadataUid(surveyCode), null);
+        return d3SClient.getDatasetMetadata(d3sBaseURL, surveyCode, null);
     }
 
     public void updateSurveyMetadata(String surveyCode) throws Exception {
@@ -76,7 +73,7 @@ public class MetadataManager {
 
         //Create metadata bean
         MeIdentification<DSDDataset> metadata = new MeIdentification<>();
-        metadata.setUid(getMetadataUid(surveyCode));
+        metadata.setUid(surveyCode);
         MeMaintenance meMaintenance = new MeMaintenance();
         metadata.setMeMaintenance(meMaintenance);
         SeUpdate seUpdate = new SeUpdate();

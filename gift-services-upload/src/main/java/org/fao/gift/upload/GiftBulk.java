@@ -6,6 +6,7 @@ import org.fao.ess.uploader.core.metadata.MetadataStorage;
 import org.fao.ess.uploader.core.process.PostUpload;
 import org.fao.ess.uploader.core.process.ProcessInfo;
 import org.fao.ess.uploader.core.storage.BinaryStorage;
+import org.fao.fenix.commons.msd.dto.full.*;
 import org.fao.gift.upload.dto.Files;
 import org.fao.gift.upload.impl.DataManager;
 import org.fao.gift.upload.impl.FileManager;
@@ -19,6 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 @ProcessInfo(context = "gift.bulk", name = "GiftBulk", priority = 1)
@@ -43,6 +46,9 @@ public class GiftBulk implements PostUpload {
     }
 
     public void mainLogic(String surveyCode, InputStream zipFileInput) throws Exception {
+        Integer year = getSurveyYear(metadataManager.loadSurveyMetadata(surveyCode));
+        if (year==null)
+            throw new BadRequestException("Survey coverage period is undefined into the metadata instance");
         //Retrieve database connection
         Connection connection = dataManager.getConnection();
         //Create temporary folder with zip file content
@@ -59,12 +65,12 @@ public class GiftBulk implements PostUpload {
             //Upload food groups data
             foodGroups.fillFoodGroupsTable(connection);
             //Upload data into database stage area
-            dataManager.uploadCSV(recognizedFilesMap.get(Files.subject), "SUBJECT_RAW", connection);
-            dataManager.uploadCSV(recognizedFilesMap.get(Files.consumption), "CONSUMPTION_RAW", connection);
+            dataManager.uploadCSV(recognizedFilesMap.get(Files.subject), "STAGE.SUBJECT_RAW", connection);
+            dataManager.uploadCSV(recognizedFilesMap.get(Files.consumption), "STAGE.CONSUMPTION_RAW", connection);
             //Validate uploaded temporary data
             dataManager.validateSurveyData(connection);
             //Publish temporary data
-            dataManager.publishData(connection, surveyCode);
+            dataManager.publishData(connection, surveyCode, year);
             //Transfer source file for bulk download
             fileManager.publishSurveyFile(file, surveyCode);
             //Update metadata
@@ -79,5 +85,18 @@ public class GiftBulk implements PostUpload {
             fileManager.removeTmpFolder(tmpFolder);
             connection.close();
         }
+    }
+
+    private Integer getSurveyYear (MeIdentification<DSDDataset> metadata) {
+        MeContent meContent = metadata!=null ? metadata.getMeContent() : null;
+        SeCoverage seCoverage = meContent!=null ? meContent.getSeCoverage() : null;
+        OjPeriod ojPeriod = seCoverage!=null ? seCoverage.getCoverageTime() : null;
+        Date from = ojPeriod!=null ? ojPeriod.getFrom() : null;
+        if (from!=null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(from);
+            return calendar.get(Calendar.YEAR);
+        } else
+            return null;
     }
 }

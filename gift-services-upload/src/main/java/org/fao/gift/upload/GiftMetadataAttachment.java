@@ -54,8 +54,8 @@ public class GiftMetadataAttachment implements PostUpload {
         File tmpFolder = fileManager.createTmpFolder();
         try {
             File file = fileManager.saveFile(tmpFolder, fileName, zipFileInput);
-            //Transfer source file for bulk download
-            fileManager.publishMetadataAttachmentFile(file, metadataManager.getMetadataUid(surveyCode));
+            //Transfer source file for download
+            fileManager.publishMetadataAttachmentFile(file, surveyCode);
             //Override existing metadata link information
             metadataManager.updateMetadataAttachments(surveyCode, fileName);
         } catch (Exception ex) {

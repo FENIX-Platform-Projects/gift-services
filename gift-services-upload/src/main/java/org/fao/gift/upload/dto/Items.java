@@ -21,6 +21,15 @@ public enum Items {
     FOLA,
     VITB12,
     VITA,
-    BCAROT
-
+    BCAROT,
+    FIBTG,
+    ASH,
+    MG,
+    PHOS,
+    POTA,
+    NA,
+    CU,
+    RETOL,
+    VITD,
+    VITE
 }
