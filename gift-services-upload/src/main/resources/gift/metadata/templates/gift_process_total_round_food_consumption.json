@@ -1,7 +1,7 @@
 {
-  "uid" : "gift_process_total_food_consumption",
+  "uid" : "gift_process_total_round_food_consumption",
   "title": {
-    "EN": "Total food daily average consumption by subject. Dataset is auto generated dataset for WHO-FAO GIFT processing purposes."
+    "EN": "Total food daily average consumption by subject and round. Dataset is auto generated dataset for WHO-FAO GIFT processing purposes."
   },
   "meContent": {
     "resourceRepresentationType": "dataset"
@@ -29,6 +29,14 @@
     },
     "contextSystem": "gift_process",
     "columns": [
+      {
+        "dataType": "number",
+        "title": {
+          "EN": "Round"
+        },
+        "key": true,
+        "id": "round"
+      },
       {
         "dataType": "text",
         "title": {

@@ -1,7 +1,7 @@
 {
-  "uid" : "gift_process_total_food_consumption",
+  "uid" : "gift_process_total_weighted_food_consumption",
   "title": {
-    "EN": "Total food daily average consumption by subject. Dataset is auto generated dataset for WHO-FAO GIFT processing purposes."
+    "EN": "Total food daily average consumption by subject divided by the number of subjects. Dataset is auto generated dataset for WHO-FAO GIFT processing purposes."
   },
   "meContent": {
     "resourceRepresentationType": "dataset"
