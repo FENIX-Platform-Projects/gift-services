@@ -30,6 +30,22 @@
     "contextSystem": "gift_process",
     "columns": [
       {
+        "dataType": "code",
+        "title": {
+          "EN": "Item"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_Items"
+            }
+          ]
+        },
+        "subject": "item",
+        "key": true,
+        "id": "item"
+      },
+      {
         "dataType": "number",
         "title": {
           "EN": "Round"
@@ -89,22 +105,6 @@
         },
         "key": true,
         "id": "foodex2_code"
-      },
-      {
-        "dataType": "code",
-        "title": {
-          "EN": "Item"
-        },
-        "domain": {
-          "codes": [
-            {
-              "idCodeList": "GIFT_Items"
-            }
-          ]
-        },
-        "subject": "item",
-        "key": true,
-        "id": "item"
       },
       {
         "dataType": "number",
