@@ -115,7 +115,7 @@ public class D3SClient {
         //Send request
         Response response = sendRequest(addQueryParameters(url.toString(),parameters), null, "get");
         if (response.getStatus() != 200)
-            throw new Exception("Error from D3S loading resource");
+            throw new Exception("Error from D3S loading resource ("+uid+" - "+version+"): ("+response.getStatus()+") "+response.getEntity());
         //Parse responseObjectMapper
         return response.readEntity(String.class);
     }
