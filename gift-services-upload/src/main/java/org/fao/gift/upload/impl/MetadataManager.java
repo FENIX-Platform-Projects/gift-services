@@ -3,6 +3,7 @@ package org.fao.gift.upload.impl;
 import org.fao.ess.uploader.core.init.UploaderConfig;
 import org.fao.fenix.commons.msd.dto.full.*;
 import org.fao.fenix.commons.msd.dto.type.DocumentType;
+import org.fao.gift.dto.MainConfig;
 import org.fao.gift.upload.dto.Items;
 import org.fao.gift.upload.dto.MetadataTemplates;
 import org.fao.gift.utils.D3SClient;
@@ -16,13 +17,14 @@ import java.util.*;
 
 public class MetadataManager {
 
-    @Inject private UploaderConfig config;
+    @Inject private MainConfig config;
+    @Inject private UploaderConfig uploaderConfig;
     @Inject private FileUtils fileUtils;
     @Inject private D3SClient d3SClient;
 
 
     public String createMetadataAttachmentLink(String surveyCode, String fileName) {
-        return config.get("gift.remote.url.prefix.metadata.attachment")+'/'+surveyCode+'/'+fileName;
+        return uploaderConfig.get("gift.remote.url.prefix.metadata.attachment")+'/'+surveyCode+'/'+fileName;
     }
 
     public void updateMetadataAttachments(String surveyCode, String fileName) throws Exception {

@@ -1,0 +1,279 @@
+{
+  "uid" : "gift_process_total_food_consumption",
+  "title": {
+    "EN": "Total food daily average consumption by subject. Dataset is auto generated dataset for WHO-FAO GIFT processing purposes."
+  },
+  "meContent": {
+    "resourceRepresentationType": "dataset"
+  },
+  "contacts": [
+    {
+      "organization": {
+        "EN": "WHO-FAO"
+      },
+      "role": "distributor",
+      "organizationUnit": {
+        "EN": "Institut de Recherche pour le DÃ©veloppement"
+      },
+      "contactInfo": {
+        "emailAddress": "pauline.allemand@gmail.com"
+      }
+    }
+  ],
+  "dsd": {
+    "datasources": [
+      "gift_process"
+    ],
+    "cache": {
+      "storage": "postgres"
+    },
+    "contextSystem": "gift_process",
+    "columns": [
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Item"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_Items"
+            }
+          ]
+        },
+        "subject": "item",
+        "key": true,
+        "id": "item"
+      },
+      {
+        "dataType": "text",
+        "title": {
+          "EN": "ID Subject"
+        },
+        "key": true,
+        "id": "subject"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Food group"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_FoodGroups"
+            }
+          ]
+        },
+        "key": true,
+        "id": "group_code"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Food sub-group"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_FoodGroups"
+            }
+          ]
+        },
+        "key": true,
+        "id": "subgroup_code"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Food"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_Foods"
+            }
+          ]
+        },
+        "key": true,
+        "id": "foodex2_code"
+      },
+      {
+        "dataType": "number",
+        "title": {
+          "EN": "Value"
+        },
+        "subject": "value",
+        "id": "value"
+      },
+      {
+        "dataType": "code",
+        "title": {
+          "EN": "Unit of measure"
+        },
+        "domain": {
+          "codes": [
+            {
+              "idCodeList": "GIFT_UM"
+            }
+          ]
+        },
+        "subject": "um",
+        "id": "um"
+      },
+
+
+
+      {
+        "id" : "gender",
+        "title" : { "EN" : "Gender" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_Gender" } ] }
+      },
+      {
+        "id" : "age_year",
+        "title" : { "EN" : "Age (years)" },
+        "dataType" : "number"
+      },
+      {
+        "id" : "age_month",
+        "title" : { "EN" : "Age (months)" },
+        "dataType" : "number"
+      },
+      {
+        "id" : "activity",
+        "title" : { "EN" : "Physical activity level" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_PhysicalActivityLevel" } ] }
+      },
+
+      {
+        "id" : "adm0_code",
+        "subject" : "geo",
+        "title" : { "EN" : "Country" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GAUL", "version" : "2014", "level" : 1 } ] }
+      },
+      {
+        "id" : "adm2_code",
+        "title" : { "EN" : "Subregion" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GAUL", "version" : "2014", "level" : 3} ] }
+      },
+      {
+        "id" : "gps",
+        "title" : { "EN" : "Geolocation" },
+        "dataType" : "text"
+      },
+      {
+        "id" : "weighting_factor",
+        "title" : { "EN" : "Weight factor" },
+        "dataType" : "number"
+      },
+      {
+        "id" : "household",
+        "title" : { "EN" : "ID Household" },
+        "dataType" : "text"
+      },
+      {
+        "id" : "birth_date",
+        "title" : { "EN" : "Date of birth" },
+        "dataType" : "date"
+      },
+      {
+        "id" : "first_ant_date",
+        "title" : { "EN" : "Date of measurement" },
+        "dataType" : "date"
+      },
+      {
+        "id" : "weight",
+        "title" : { "EN" : "Weight (kg)" },
+        "dataType" : "number"
+      },
+      {
+        "id" : "height",
+        "title" : { "EN" : "Height (cm)" },
+        "dataType" : "number"
+      },
+      {
+        "id" : "method_first_weight",
+        "title" : { "EN" : "Method for body weight measurement" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_MethodMeasurement" } ] }
+      },
+      {
+        "id" : "method_first_height",
+        "title" : { "EN" : "Method for height measurement" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_MethodMeasurement" } ] }
+      },
+      {
+        "id" : "second_ant_date",
+        "title" : { "EN" : "Date of second measurement" },
+        "dataType" : "date"
+      },
+      {
+        "id" : "sweight",
+        "title" : { "EN" : "Weight (kg) - Second measurement" },
+        "dataType" : "number"
+      },
+      {
+        "id" : "sheight",
+        "title" : { "EN" : "Height (cm) - Second measurement" },
+        "dataType" : "number"
+      },
+      {
+        "id" : "method_second_weight",
+        "title" : { "EN" : "Method for body weight second measurement" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_MethodMeasurement" } ] }
+      },
+      {
+        "id" : "method_second_height",
+        "title" : { "EN" : "Method for height second measurement" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_MethodMeasurement" } ] }
+      },
+      {
+        "id" : "special_diet",
+        "title" : { "EN" : "Special diet" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_SpecialDiet" } ] }
+      },
+      {
+        "id" : "special_condition",
+        "title" : { "EN" : "Special condition" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_SpecialConditions" } ] }
+      },
+      {
+        "id" : "energy_intake",
+        "title" : { "EN" : "Daily energy intake" },
+        "dataType" : "number"
+      },
+      {
+        "id" : "unoverrep",
+        "title" : { "EN" : "Outliers" },
+        "dataType" : "text"
+      },
+      {
+        "id" : "education",
+        "title" : { "EN" : "Education" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_Education" } ] }
+      },
+      {
+        "id" : "ethnic",
+        "title" : { "EN" : "Ethnic group" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_Ethnicity" } ] }
+      },
+      {
+        "id" : "profession",
+        "title" : { "EN" : "Profession" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_Occupation" } ] }
+      }
+    ]
+  }
+}
