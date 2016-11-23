@@ -5,6 +5,7 @@ public enum MetadataTemplates {
     //gift_process_daily_avg(true, false),
     //gift_process_total_subgroup_consumption(true, false),
 
+    gift_process_subject_daily_consumption(true, false),
     gift_process_total_food_consumption(true, false),
     gift_process_total_weighted_food_consumption(true, false),
     gift_process_total_round_food_consumption(true, false),

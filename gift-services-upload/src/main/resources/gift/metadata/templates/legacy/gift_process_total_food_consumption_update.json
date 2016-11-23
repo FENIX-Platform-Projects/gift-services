@@ -121,9 +121,6 @@
         "subject": "um",
         "id": "um"
       },
-
-
-
       {
         "id" : "gender",
         "title" : { "EN" : "Gender" },
@@ -140,6 +137,19 @@
         "title" : { "EN" : "Age (months)" },
         "dataType" : "number"
       },
+      {
+        "id" : "special_condition",
+        "title" : { "EN" : "Special condition" },
+        "dataType" : "code",
+        "domain" : { "codes" : [ { "idCodeList" : "GIFT_SpecialConditions" } ] }
+      },
+
+
+
+
+
+
+
       {
         "id" : "activity",
         "title" : { "EN" : "Physical activity level" },

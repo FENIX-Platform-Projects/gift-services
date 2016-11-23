@@ -18,7 +18,7 @@
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
-					<warName>policy</warName>
+					<warName>gift</warName>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -52,6 +52,19 @@
 					<groupId>org.javassist</groupId>
 					<artifactId>javassist</artifactId>
 					<version>3.19.0-GA</version>
+				</dependency>
+				<!-- REST Client -->
+				<dependency>
+					<groupId>org.jboss.resteasy</groupId>
+					<artifactId>resteasy-client</artifactId>
+					<version>${resteasy.version}</version>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.resteasy</groupId>
+					<artifactId>resteasy-jackson-provider</artifactId>
+					<version>${resteasy.version}</version>
+					<scope>provided</scope>
 				</dependency>
 			</dependencies>
         </profile>

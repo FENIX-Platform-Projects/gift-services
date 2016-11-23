@@ -1,6 +1,7 @@
 package org.fao.gift.upload.impl;
 
 import org.fao.ess.uploader.core.init.UploaderConfig;
+import org.fao.gift.dto.MainConfig;
 import org.fao.gift.upload.dto.Queries;
 import org.fao.gift.utils.D3SClient;
 import org.fao.fenix.commons.msd.dto.data.Resource;
@@ -14,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.util.*;
 
 public class FoodGroups {
-    @Inject private UploaderConfig config;
+    @Inject private MainConfig config;
     @Inject D3SClient d3SClient;
 
     public void fillFoodGroupsTable (Connection connection) throws Exception {
