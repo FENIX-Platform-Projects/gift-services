@@ -1,4 +1,4 @@
-package org.fao.gift.upload;
+package org.fao.gift.upload.future;
 
 import org.fao.ess.uploader.core.dto.ChunkMetadata;
 import org.fao.ess.uploader.core.dto.FileMetadata;

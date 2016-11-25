@@ -46,9 +46,6 @@ public class GiftBulk implements PostUpload {
     }
 
     public void mainLogic(String surveyCode, InputStream zipFileInput) throws Exception {
-        Integer year = getSurveyYear(metadataManager.loadSurveyMetadata(surveyCode));
-        if (year==null)
-            throw new BadRequestException("Survey coverage period is undefined into the metadata instance");
         //Retrieve database connection
         Connection connection = dataManager.getConnection();
         //Create temporary folder with zip file content
@@ -70,7 +67,7 @@ public class GiftBulk implements PostUpload {
             //Validate uploaded temporary data
             dataManager.validateSurveyData(connection);
             //Publish temporary data
-            dataManager.publishData(connection, surveyCode, year);
+            dataManager.publishData(connection, surveyCode);
             //Transfer source file for bulk download
             fileManager.publishSurveyFile(file, surveyCode);
             //Update metadata

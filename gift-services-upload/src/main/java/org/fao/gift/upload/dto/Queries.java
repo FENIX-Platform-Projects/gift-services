@@ -15,7 +15,7 @@ public enum Queries {
     //PUBLISH
     updateSubject("{ call refresh_subject(?) }"),
     updateConsumption("{ call refresh_consumption(?) }"),
-    updateSurveyIndex("{ call refresh_survey_index(?,?) }"),
+    updateSurveyIndex("{ call refresh_survey_index(?) }"),
 //    updateMaster(""),
 //    updateMasterAvg(""),
 

@@ -51,7 +51,7 @@ public class DataManager {
         connection.createStatement().executeUpdate(Queries.cleanFoodGroups.getQuery());
     }
 
-    public void publishData(Connection connection, String surveyCode, Integer year) throws Exception {
+    public void publishData(Connection connection, String surveyCode) throws Exception {
         //Update survey data with raw tables content
         CallableStatement callStatement = connection.prepareCall(Queries.updateSubject.getQuery());
         callStatement.setString(1, surveyCode);
@@ -61,7 +61,6 @@ public class DataManager {
         callStatement.execute();
         callStatement = connection.prepareCall(Queries.updateSurveyIndex.getQuery());
         callStatement.setString(1, surveyCode);
-        callStatement.setInt(2, year);
         callStatement.execute();
     }
 

@@ -1,4 +1,4 @@
-package org.fao.amis.policy.rest.application;
+package org.fao.gift.rest.application;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.NoContentException;

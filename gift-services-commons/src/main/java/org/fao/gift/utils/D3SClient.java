@@ -1,12 +1,10 @@
 package org.fao.gift.utils;
 
-import org.fao.fenix.commons.find.dto.filter.CodesFilter;
-import org.fao.fenix.commons.find.dto.filter.FieldFilter;
-import org.fao.fenix.commons.find.dto.filter.IdFilter;
-import org.fao.fenix.commons.find.dto.filter.StandardFilter;
+import org.fao.fenix.commons.find.dto.filter.*;
 import org.fao.fenix.commons.msd.dto.data.ReplicationFilter;
 import org.fao.fenix.commons.msd.dto.data.Resource;
 import org.fao.fenix.commons.msd.dto.full.*;
+import org.fao.fenix.commons.msd.dto.type.DataType;
 import org.fao.fenix.commons.utils.JSONUtils;
 import org.fao.fenix.commons.utils.Language;
 
@@ -26,8 +24,8 @@ import java.util.*;
 
 @ApplicationScoped
 public class D3SClient {
-    @Inject
-    JSONUtils jsonUtils;
+    @Inject JSONUtils jsonUtils;
+    @Inject FenixUtils fenixUtils;
 
 
     public Collection<Code> filterCodelist(String baseUrl, String uid, String version, Collection<String> codes) throws Exception {
@@ -145,6 +143,7 @@ public class D3SClient {
         return response.getStatus()!=204 ? response.readEntity(new GenericType<Collection<MeIdentification<DSDDataset>>>(){}) : new LinkedList<MeIdentification<DSDDataset>>();
     }
 
+
     public void insertMetadata (String baseUrl, Collection<MeIdentification<DSDDataset>> metadataList) throws Exception {
         if (metadataList==null || metadataList.size()==0)
             return;
@@ -244,6 +243,64 @@ public class D3SClient {
     }
 
 
+    public Collection<MeIdentification<DSDDataset>> retrieveMetadataForStatistics(String baseUrl, String context, Collection<String> countries, String referenceArea, String coverageSector, TimeFilter year) throws Exception {
+        //Create filter
+        StandardFilter filter = new StandardFilter();
+
+        FieldFilter fieldFilter = new FieldFilter();
+        fieldFilter.enumeration = Arrays.asList(context);
+        filter.put("dsd.contextSystem", fieldFilter);
+
+        fieldFilter = new FieldFilter();
+        fieldFilter.enumeration = Arrays.asList("dataset");
+        filter.put("meContent.resourceRepresentationType", fieldFilter);
+
+        if (countries!=null && countries.size()>0) {
+            fieldFilter = new FieldFilter();
+            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GAUL0", "2014", countries));
+            filter.put("meContent.seCoverage.coverageGeographic", fieldFilter);
+        }
+
+        if (year!=null) {
+            fieldFilter = new FieldFilter();
+            fieldFilter.time = Arrays.asList(year);
+            filter.put("meContent.seCoverage.coverageTime", fieldFilter);
+        }
+
+        if ("1".equals(coverageSector)) {
+            fieldFilter = new FieldFilter();
+            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GIFT_CoverageSector", null, Arrays.asList("1","3")));
+            filter.put("meContent.seCoverage.coverageSectors", fieldFilter);
+        }
+        if ("2".equals(coverageSector)) {
+            fieldFilter = new FieldFilter();
+            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GIFT_CoverageSector", null, Arrays.asList("2","3")));
+            filter.put("meContent.seCoverage.coverageSectors", fieldFilter);
+        }
+
+        if ("1".equals(referenceArea)) {
+            fieldFilter = new FieldFilter();
+            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GIFT_ReferenceArea", null, Arrays.asList("1")));
+            filter.put("meContent.seReferencePopulation.referenceArea", fieldFilter);
+        }
+        if ("2".equals(referenceArea)) {
+            fieldFilter = new FieldFilter();
+            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GIFT_ReferenceArea", null, Arrays.asList("2","3","4","5")));
+            filter.put("meContent.seReferencePopulation.referenceArea", fieldFilter);
+        }
+
+
+        //Send request
+        Map<String,String> parameters = new HashMap<>();
+        parameters.put("maxSize","1000000");
+        String url = addQueryParameters(baseUrl+"msd/resources/find", parameters);
+        Response response = sendRequest(url, filter, "post");
+        if (response.getStatus() != 200 && response.getStatus() != 201 && response.getStatus() != 204)
+            throw new Exception("Error from D3S requiring existing datasets metadata");
+
+        //Parse response
+        return response.getStatus()!=204 ? response.readEntity(new GenericType<Collection<MeIdentification<DSDDataset>>>(){}) : new LinkedList<MeIdentification<DSDDataset>>();
+    }
 
 
 

@@ -35,16 +35,4 @@ public class Initializer implements ServletContextListener {
     }
 
 
-
-    //Utils
-    private HostProperties getAttachmentsRemoteFolderHostProperties(Map<String,String> config) {
-        return new HostProperties(
-                null,
-                config.get("gift.remote.host"),
-                new Integer(config.get("gift.remote.port")),
-                config.get("gift.remote.usr"),
-                config.get("gift.remote.psw"),
-                config.get("gift.remote.path.bulk.download")
-        );
-    }
 }
