@@ -1,3 +1,46 @@
 {
-
+  "meContent.seCoverage.coverageGeographic" : {
+    "codes" : [
+      {
+        "uid" : "GAUL", "version" : "2014", "codes" : [ "42" ]
+      }
+    ]
+  },
+  "meContent.seCoverage.coverageTime" : {
+    "time" : [
+      {
+        "from" : 2015,
+        "to" : 2016
+      }
+    ]
+  },
+  "age_year" : {
+    "number" : [
+      {
+        "from" : 1,
+        "to" : 90
+      }
+    ]
+  },
+  "foodex2_code" : {
+    "codes" : [
+      {
+        "uid" : "GIFT_Foods", "codes" : [ "A015H" ]
+      }
+    ]
+  },
+  "gender" : {
+    "codes" : [
+      {
+        "uid" : "GIFT_Gender_filter", "codes" : [ "2" ]
+      }
+    ]
+  },
+  "special_condition" : {
+    "codes" : [
+      {
+        "uid" : "GIFT_SpecialConditions_filter", "codes" : [ "5" ]
+      }
+    ]
+  }
 }

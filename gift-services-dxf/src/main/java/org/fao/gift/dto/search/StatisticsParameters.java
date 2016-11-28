@@ -10,10 +10,10 @@ import java.util.LinkedList;
 public class StatisticsParameters {
 
     //Geographic
-    public Collection<String> countries = null;
+    public CodesFilter countries = null;
     //Survey
-    public String referenceArea = null;
-    public String coverageSector = null;
+    public CodesFilter referenceArea = null;
+    public CodesFilter coverageSector = null;
     public TimeFilter year = null;
 
     //Pupulation
@@ -34,9 +34,9 @@ public class StatisticsParameters {
         reset();
         if (fenixFilter!=null) {
             //Metadata fields
-            countries = extractCodes(fenixFilter,"meContent.seCoverage.coverageGeographic");
-            referenceArea = extractCode(fenixFilter,"meContent.seReferencePopulation.referenceArea");
-            coverageSector = extractCode(fenixFilter,"meContent.seCoverage.coverageSectors");
+            countries = extractCodesFilter(fenixFilter,"meContent.seCoverage.coverageGeographic");
+            referenceArea = extractCodesFilter(fenixFilter,"meContent.seReferencePopulation.referenceArea");
+            coverageSector = extractCodesFilter(fenixFilter,"meContent.seCoverage.coverageSectors");
             year = extractTimeFilter(fenixFilter, "meContent.seCoverage.coverageTime");
             //Data fields
             gender = extractCode(fenixFilter,"gender");
@@ -87,8 +87,21 @@ public class StatisticsParameters {
         return null;
     }
 
+
+    private CodesFilter extractCodesFilter(StandardFilter fenixFilter, String fieldName) throws InvalidPropertiesFormatException {
+        FieldFilter fieldFilter = fenixFilter.get(fieldName);
+        if (fieldFilter!=null) {
+            if (fieldFilter.retrieveFilterType()!=FieldFilterType.code)
+                throw new InvalidPropertiesFormatException(fieldName+" must be a code type filter");
+            if (fieldFilter.codes.size()>1)
+                throw new InvalidPropertiesFormatException(fieldName+" must be a single code list value");
+            return fieldFilter.codes.size()>0 ? fieldFilter.codes.iterator().next() : null;
+        }
+        return null;
+    }
+
     private String extractCode(StandardFilter fenixFilter, String fieldName) throws InvalidPropertiesFormatException {
-        Collection<String> value = new LinkedList<>();
+        Collection<String> value = extractCodes(fenixFilter, fieldName);
         if (value!=null && value.size()>1)
             throw new InvalidPropertiesFormatException(fieldName+" must be a single value code type filter");
         return value!=null && value.size()==1 ? value.iterator().next() : null;

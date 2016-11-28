@@ -243,7 +243,7 @@ public class D3SClient {
     }
 
 
-    public Collection<MeIdentification<DSDDataset>> retrieveMetadataForStatistics(String baseUrl, String context, Collection<String> countries, String referenceArea, String coverageSector, TimeFilter year) throws Exception {
+    public Collection<MeIdentification<DSDDataset>> retrieveMetadataForStatistics(String baseUrl, String context, CodesFilter countries, CodesFilter referenceArea, CodesFilter coverageSector, TimeFilter year) throws Exception {
         //Create filter
         StandardFilter filter = new StandardFilter();
 
@@ -255,9 +255,9 @@ public class D3SClient {
         fieldFilter.enumeration = Arrays.asList("dataset");
         filter.put("meContent.resourceRepresentationType", fieldFilter);
 
-        if (countries!=null && countries.size()>0) {
+        if (countries!=null && countries.codes!=null && countries.codes.size()>0) {
             fieldFilter = new FieldFilter();
-            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GAUL0", "2014", countries));
+            fieldFilter.codes = Arrays.asList(countries);
             filter.put("meContent.seCoverage.coverageGeographic", fieldFilter);
         }
 
@@ -267,32 +267,40 @@ public class D3SClient {
             filter.put("meContent.seCoverage.coverageTime", fieldFilter);
         }
 
-        if ("1".equals(coverageSector)) {
-            fieldFilter = new FieldFilter();
-            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GIFT_CoverageSector", null, Arrays.asList("1","3")));
-            filter.put("meContent.seCoverage.coverageSectors", fieldFilter);
-        }
-        if ("2".equals(coverageSector)) {
-            fieldFilter = new FieldFilter();
-            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GIFT_CoverageSector", null, Arrays.asList("2","3")));
-            filter.put("meContent.seCoverage.coverageSectors", fieldFilter);
+        if (coverageSector!=null && coverageSector.codes!=null && coverageSector.codes.size()>0) {
+            Collection codes = new LinkedList();
+            for (String code : coverageSector.codes)
+                if ("1".equals(code))
+                    codes.addAll(Arrays.asList("1","3"));
+                else if ("2".equals(code))
+                    codes.addAll(Arrays.asList("2","3"));
+            if ((coverageSector.codes = codes).size()>0) {
+                fieldFilter = new FieldFilter();
+                fieldFilter.codes = Arrays.asList(coverageSector);
+                filter.put("meContent.seCoverage.coverageSectors", fieldFilter);
+            }
         }
 
-        if ("1".equals(referenceArea)) {
-            fieldFilter = new FieldFilter();
-            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GIFT_ReferenceArea", null, Arrays.asList("1")));
-            filter.put("meContent.seReferencePopulation.referenceArea", fieldFilter);
-        }
-        if ("2".equals(referenceArea)) {
-            fieldFilter = new FieldFilter();
-            fieldFilter.codes = Arrays.asList(fenixUtils.toCodesFilter("GIFT_ReferenceArea", null, Arrays.asList("2","3","4","5")));
-            filter.put("meContent.seReferencePopulation.referenceArea", fieldFilter);
+        if (referenceArea!=null && referenceArea.codes!=null && referenceArea.codes.size()>0) {
+            Collection codes = new LinkedList();
+            for (String code : referenceArea.codes)
+                if ("1".equals(code))
+                    codes.addAll(Arrays.asList("1"));
+                else if ("2".equals(code))
+                    codes.addAll(Arrays.asList("2","3","4","5"));
+            if ((referenceArea.codes = codes).size()>0) {
+                fieldFilter = new FieldFilter();
+                fieldFilter.codes = Arrays.asList(referenceArea);
+                filter.put("meContent.seReferencePopulation.referenceArea", fieldFilter);
+            }
         }
 
 
         //Send request
         Map<String,String> parameters = new HashMap<>();
         parameters.put("maxSize","1000000");
+        parameters.put("full","true");
+        parameters.put("dsd","true");
         String url = addQueryParameters(baseUrl+"msd/resources/find", parameters);
         Response response = sendRequest(url, filter, "post");
         if (response.getStatus() != 200 && response.getStatus() != 201 && response.getStatus() != 204)

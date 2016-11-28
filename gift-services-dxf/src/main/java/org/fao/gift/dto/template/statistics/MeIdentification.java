@@ -36,8 +36,9 @@ public class MeIdentification extends ResponseHandler {
     @JsonProperty
     public Long getSampleSize() {
         Map<String,Object> additions = getAdditions();
-        Map<String,Object> populationInformation = additions!=null ? (Map<String,Object>)additions.get("SampledPopulationInformation") : null;
-        return populationInformation!=null ? (Long) populationInformation.get("") : null;
+        Map<String,Object> populationInformation = additions!=null ? (Map<String,Object>)additions.get("sampledPopulationInformation") : null;
+        Number populationSize = populationInformation!=null ? (Number) populationInformation.get("sampleSize") : null;
+        return populationSize!=null ? populationSize.longValue() : null;
     }
 
 

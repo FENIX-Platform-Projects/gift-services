@@ -1,8 +1,9 @@
 package org.fao.gift.rest;
 
 import org.fao.fenix.commons.find.dto.filter.StandardFilter;
+import org.fao.fenix.commons.msd.dto.full.DSDDataset;
+import org.fao.fenix.commons.msd.dto.full.MeIdentification;
 import org.fao.gift.dto.search.StatisticsParameters;
-import org.fao.gift.dto.template.statistics.MeIdentification;
 import org.fao.gift.rest.spi.StatisticsSpi;
 import org.fao.gift.services.FilteringLogic;
 import org.fao.fenix.commons.msd.dto.templates.ResponseBeanFactory;
@@ -17,8 +18,16 @@ public class StatisticsService implements StatisticsSpi {
 
 
     @Override
-    public Collection<MeIdentification> filterForStatistics(StandardFilter fenixFilter) throws Exception {
-        return ResponseBeanFactory.getInstances(MeIdentification.class, filteringLogic.filterForStatistics(new StatisticsParameters(fenixFilter)));
+    public Collection<Object> filterForStatistics(StandardFilter fenixFilter, boolean full) throws Exception {
+        Collection<MeIdentification<DSDDataset>> data = filteringLogic.filterForStatistics(new StatisticsParameters(fenixFilter));
+        return ResponseBeanFactory.getInstances(getProxyClass(full), data);
+    }
+
+
+    private Class getProxyClass(boolean full) {
+        if (full)
+            return org.fao.fenix.commons.msd.dto.templates.standard.combined.dataset.Metadata.class;
+        return org.fao.gift.dto.template.statistics.MeIdentification.class;
     }
 
 }

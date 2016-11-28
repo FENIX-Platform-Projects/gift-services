@@ -13,6 +13,6 @@ public interface StatisticsSpi {
 
     @POST
     @Path("/filter")
-    Collection<MeIdentification> filterForStatistics(StandardFilter fenixFilter) throws Exception;
+    Collection<Object> filterForStatistics(StandardFilter fenixFilter, @QueryParam("full") @DefaultValue("false") boolean full) throws Exception;
 
 }
