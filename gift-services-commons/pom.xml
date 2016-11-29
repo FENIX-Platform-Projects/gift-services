@@ -22,6 +22,7 @@
             <artifactId>fenix-commons-dxf</artifactId>
             <version>${fenix.commons.version}</version>
         </dependency>
+        <!-- Orient support -->
         <dependency>
             <groupId>com.orientechnologies</groupId>
             <artifactId>orientdb-client</artifactId>
@@ -37,13 +38,6 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
             <version>${resteasy.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson-provider</artifactId>
-            <version>${resteasy.version}</version>
-            <scope>provided</scope>
         </dependency>
         <!-- SSH -->
         <dependency>
@@ -51,24 +45,6 @@
             <artifactId>jsch</artifactId>
             <version>${jsch.version}</version>
         </dependency>
-        <!-- Jackson utils support         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-
     </dependencies>
 
 </project>

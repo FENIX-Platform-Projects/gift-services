@@ -145,6 +145,20 @@
         "key": true,
         "title" : { "EN" : "Age (months)" },
         "dataType" : "number"
+      },
+      {
+        "dataType": "number",
+        "title": {
+          "EN": "Suggested value"
+        },
+        "id": "suggested_value"
+      },
+      {
+        "dataType": "number",
+        "title": {
+          "EN": "Increment"
+        },
+        "id": "increment"
       }
     ]
   }

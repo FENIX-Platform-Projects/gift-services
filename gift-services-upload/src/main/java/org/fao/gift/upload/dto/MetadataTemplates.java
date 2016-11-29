@@ -12,6 +12,7 @@ public enum MetadataTemplates {
     //gift_process_total_round_weighted_food_consumption(true, false),
 
     //current
+    gift_process_food_consumption(true, false),
     gift_process_total_food_consumption(true, false),
     gift_process_total_weighted_food_consumption(true, false),
     ;

@@ -24,7 +24,6 @@ import java.util.*;
 
 @ApplicationScoped
 public class D3SClient {
-    @Inject JSONUtils jsonUtils;
     @Inject FenixUtils fenixUtils;
 
 

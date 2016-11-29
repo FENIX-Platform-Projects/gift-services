@@ -1,6 +1,7 @@
 package org.fao.gift.rest.application;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -22,6 +23,7 @@ public class DefaultJsonOptions implements ContextResolver<ObjectMapper> {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.disable(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     @Override
