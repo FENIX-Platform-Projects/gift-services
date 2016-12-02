@@ -44,19 +44,19 @@ public class FilteringDao extends Dao {
             where.append("special_condition &&  ARRAY[");
             for (String specialCondition : params.special_condition)
                 if (specialCondition.equals("1")) { //Pregnant
-                    where.append("?::text,?::text");
+                    where.append("?::text,?::text,");
                     queryParams.addAll(Arrays.asList("2","8"));
                 } else if (specialCondition.equals("2")) { //Lactating
-                    where.append("?::text,?::text");
+                    where.append("?::text,?::text,");
                     queryParams.addAll(Arrays.asList("3","9"));
                 } else if (specialCondition.equals("3")) { //Pregnant and lactating
-                    where.append("?::text,?::text");
+                    where.append("?::text,?::text,");
                     queryParams.addAll(Arrays.asList("4","11"));
                 } else if (specialCondition.equals("5")) { //Non pregnant and non lactating
-                    where.append("?::text,?::text,?::text,?::text,?::text");
+                    where.append("?::text,?::text,?::text,?::text,?::text,");
                     queryParams.addAll(Arrays.asList("1","5","6","7","10"));
                 }
-            where.append(']');
+            where.setCharAt(where.length()-1, ']');
 
             if (params.gender==null)
                 where.append(')');

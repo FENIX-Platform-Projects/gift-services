@@ -33,12 +33,6 @@
             <artifactId>orientdb-object</artifactId>
             <version>${orient.version}</version>
         </dependency>
-        <!-- REST Client -->
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client</artifactId>
-            <version>${resteasy.version}</version>
-        </dependency>
         <!-- SSH -->
         <dependency>
             <groupId>com.jcraft</groupId>
