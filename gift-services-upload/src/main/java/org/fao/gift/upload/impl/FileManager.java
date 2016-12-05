@@ -74,6 +74,9 @@ public class FileManager {
 
     //Remote survey folder management
     public void publishSurveyFile(File zipFile, String surveyCode) throws Exception {
+        publishSurveyFile(new FileInputStream(zipFile), surveyCode);
+    }
+    public void publishSurveyFile(InputStream zipFile, String surveyCode) throws Exception {
         ChannelSftp channel = getConnection();
         try {
             channel.cd(bulkRemoteProperties.getPath());
@@ -175,8 +178,11 @@ public class FileManager {
             channel.rm(path);
     }
     private String uploadFile(ChannelSftp channel, File sourceFile, String fileName) throws Exception {
-        DigestInputStream input = new DigestInputStream(new FileInputStream(sourceFile), MessageDigest.getInstance("MD5"));
-        channel.put(input, fileName==null ? sourceFile.getName() : fileName, null, ChannelSftp.OVERWRITE);
+        return uploadFile(channel, new FileInputStream(sourceFile), fileName==null ? sourceFile.getName() : fileName);
+    }
+    private String uploadFile(ChannelSftp channel, InputStream sourceFile, String fileName) throws Exception {
+        DigestInputStream input = new DigestInputStream(sourceFile, MessageDigest.getInstance("MD5"));
+        channel.put(input, fileName, null, ChannelSftp.OVERWRITE);
         return new BigInteger(1, input.getMessageDigest().digest()).toString(16);
     }
 

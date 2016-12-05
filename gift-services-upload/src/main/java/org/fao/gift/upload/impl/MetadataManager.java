@@ -89,12 +89,16 @@ public class MetadataManager {
         String d3sBaseURL = config.get("gift.d3s.url");
         d3sBaseURL = d3sBaseURL + (d3sBaseURL.charAt(d3sBaseURL.length() - 1) != '/' ? "/" : "");
 
-        Collection<MeIdentification<DSDDataset>> newMetadatyaList = createMetadata(survey);
-        Collection<MeIdentification<DSDDataset>> existingMetadatyaList = loadExistingProcessMetadata(d3sBaseURL);
-        Groups<MeIdentification<DSDDataset>> metadataGroups = new Groups(newMetadatyaList, existingMetadatyaList);
+        d3SClient.deleteMetadata(d3sBaseURL, loadExistingProcessMetadata(d3sBaseURL, survey));
+        d3SClient.insertMetadata(d3sBaseURL, createMetadata(survey));
+    }
 
-        d3SClient.deleteMetadata(d3sBaseURL, metadataGroups.update);
-        d3SClient.insertMetadata(d3sBaseURL, newMetadatyaList);
+    public void fetchProcessingDatasetsMetadata (String survey) throws Exception {
+        String d3sBaseURL = config.get("gift.d3s.url");
+        d3sBaseURL = d3sBaseURL + (d3sBaseURL.charAt(d3sBaseURL.length() - 1) != '/' ? "/" : "");
+
+        for (MeIdentification<DSDDataset> metadata : loadExistingProcessMetadata(d3sBaseURL, survey))
+            d3SClient.getDataset(d3sBaseURL, metadata.getUid(), metadata.getVersion(), null, 1, null);
     }
 
     private Collection<MeIdentification<DSDDataset>> createMetadata (String survey) throws Exception {
@@ -117,8 +121,12 @@ public class MetadataManager {
         return metadataInstances;
     }
 
-    private Collection<MeIdentification<DSDDataset>> loadExistingProcessMetadata(String d3sBaseURL) throws Exception {
-        return d3SClient.retrieveMetadata(d3sBaseURL, "gift_process");
+    private Collection<MeIdentification<DSDDataset>> loadExistingProcessMetadata(String d3sBaseURL, String surveyCode) throws Exception {
+        Collection<MeIdentification<DSDDataset>> metadataList = new LinkedList<>();
+        for (MeIdentification<DSDDataset> metadata : d3SClient.retrieveMetadata(d3sBaseURL, "gift_process"))
+            if (metadata.getUid().endsWith(surveyCode))
+                metadataList.add(metadata);
+        return metadataList;
     }
 
     //Utils

@@ -22,6 +22,7 @@ public class GiftBulkTest {
     @Test
     public void mainLogic1() throws Exception {
         giftBulkManager.mainLogic("000042BUR201001", this.getClass().getResourceAsStream("/test/burkina_test1.zip"));
+        //giftBulkManager.mainLogic("000196PHI201001", this.getClass().getResourceAsStream("/test/philippines_test1.zip"));
     }
 
 }

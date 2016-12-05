@@ -69,12 +69,15 @@ public class GiftBulk implements PostUpload {
             //Publish temporary data
             dataManager.publishData(connection, surveyCode);
             //Transfer source file for bulk download
-            fileManager.publishSurveyFile(file, surveyCode);
+            //fileManager.publishSurveyFile(file, surveyCode); //original
+            fileManager.publishSurveyFile(this.getClass().getResourceAsStream("/gift/data/emptySurvey.zip"), surveyCode); //temporary
             //Update metadata
             metadataManager.updateSurveyMetadata(surveyCode);
             metadataManager.updateProcessingDatasetsMetadata(surveyCode);
             //Commit database changes
             connection.commit();
+            //Start D3S data fetching
+            metadataManager.fetchProcessingDatasetsMetadata(surveyCode);
         } catch (Exception ex) {
             connection.rollback();
             throw ex;
