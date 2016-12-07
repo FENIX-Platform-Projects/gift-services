@@ -40,7 +40,11 @@ public class DataManager {
     public void validateSurveyData(Connection connection) throws Exception {
         //Verify data food codes are assigned to a group
         StringBuilder error = new StringBuilder();
-        for (ResultSet resultSet = connection.createStatement().executeQuery(Queries.getUnexistingFoodGroup.getQuery()); resultSet.next(); error.append('\n').append(resultSet.getString(1)));
+        for (ResultSet resultSet = connection.createStatement().executeQuery(Queries.getUnexistingFoodGroup.getQuery()); resultSet.next(); ) {
+            String e = resultSet.getString(1);
+            if (e!=null)
+                error.append('\n').append(e);
+        }
         if (error.length()>0)
             throw new NotAcceptableException("Data have food codes with no group assigned: "+error.toString());
     }
