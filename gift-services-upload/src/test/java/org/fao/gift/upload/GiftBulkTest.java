@@ -23,11 +23,12 @@ public class GiftBulkTest {
     public void testBUR() throws Exception {
         giftBulkManager.mainLogic("000042BUR201001", this.getClass().getResourceAsStream("/test/burkina_test1.zip"));
     }
-//    @Test
-    public void testPHI() throws Exception {
-        giftBulkManager.mainLogic("000196PHI201001", this.getClass().getResourceAsStream("/test/philippines_test1.zip"));
-    }
     @Test
+    public void testPHI() throws Exception {
+        //giftBulkManager.mainLogic("000196PHI201001", this.getClass().getResourceAsStream("/test/philippines_test1.zip"));
+        giftBulkManager.mainLogic("D3S_32453091774832789368582605865561866810", this.getClass().getResourceAsStream("/test/Philippines.zip"));
+    }
+//    @Test
     public void testBGD() throws Exception {
         giftBulkManager.mainLogic("000023BGD201001", this.getClass().getResourceAsStream("/test/bangladesh_test1.zip"));
     }
