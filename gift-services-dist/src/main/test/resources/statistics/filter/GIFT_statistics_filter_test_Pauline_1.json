@@ -1,0 +1,28 @@
+{
+  "meContent.seCoverage.coverageTime": {
+    "time": [
+      {
+        "from": 1980,
+        "to": 2016
+      }
+    ]
+  },
+  "special_condition": {
+    "codes": [
+      {
+        "uid": "GIFT_SpecialConditions",
+        "codes": [
+          "4"
+        ]
+      }
+    ]
+  },
+  "age_year": {
+    "number": [
+      {
+        "from": 0,
+        "to": 120
+      }
+    ]
+  }
+}

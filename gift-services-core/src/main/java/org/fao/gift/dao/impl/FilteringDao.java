@@ -52,7 +52,7 @@ public class FilteringDao extends Dao {
                 } else if (specialCondition.equals("3")) { //Pregnant and lactating
                     where.append("?::text,?::text,");
                     queryParams.addAll(Arrays.asList("4","11"));
-                } else if (specialCondition.equals("5")) { //Non pregnant and non lactating
+                } else if (specialCondition.equals("4")) { //Non pregnant and non lactating
                     where.append("?::text,?::text,?::text,?::text,?::text,");
                     queryParams.addAll(Arrays.asList("1","5","6","7","10"));
                 }
