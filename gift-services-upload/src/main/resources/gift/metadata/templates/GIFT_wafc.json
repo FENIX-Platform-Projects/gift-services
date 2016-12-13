@@ -1,5 +1,5 @@
 {
-  "uid" : "gift_process_total_weighted_food_consumption",
+  "uid" : "GIFT_wafc",
   "title": {
     "EN": "Total food daily average consumption by subject divided by the number of subjects. Dataset is auto generated dataset for WHO-FAO GIFT processing purposes."
   },

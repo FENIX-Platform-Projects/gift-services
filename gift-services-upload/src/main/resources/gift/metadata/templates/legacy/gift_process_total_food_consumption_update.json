@@ -1,5 +1,5 @@
 {
-  "uid" : "gift_process_total_food_consumption",
+  "uid" : "GIFT_afc",
   "title": {
     "EN": "Total food daily average consumption by subject. Dataset is auto generated dataset for WHO-FAO GIFT processing purposes."
   },

@@ -12,9 +12,9 @@ public enum MetadataTemplates {
     //gift_process_total_round_weighted_food_consumption(true, false),
 
     //current
-    gift_process_food_consumption(true, false),
-    gift_process_total_food_consumption(true, false),
-    gift_process_total_weighted_food_consumption(true, false),
+    GIFT_fc(true, false),
+    GIFT_afc(true, false),
+    GIFT_wafc(true, false),
     ;
 
     public boolean bySurvey, byItem;
