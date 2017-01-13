@@ -25,8 +25,8 @@ public class GiftBulkTest {
     }
     @Test
     public void testPHI() throws Exception {
-        giftBulkManager.mainLogic("000196PHI201001", this.getClass().getResourceAsStream("/test/philippines_test1.zip"));
-        //giftBulkManager.mainLogic("D3S_32453091774832789368582605865561866810", this.getClass().getResourceAsStream("/test/Philippines.zip"));
+        //giftBulkManager.mainLogic("000196PHI201001", this.getClass().getResourceAsStream("/test/philippines_test1.zip"));
+        giftBulkManager.mainLogic("D3S_32453091774832789368582605865561866810", this.getClass().getResourceAsStream("/test/Philippines.zip"));
     }
     @Test
     public void testBGD() throws Exception {

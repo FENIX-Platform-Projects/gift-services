@@ -1,6 +1,5 @@
 package org.fao.gift.dto.template.statistics;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.orientechnologies.orient.core.db.record.OIdentifiable;
 import com.orientechnologies.orient.core.exception.OSerializationException;
@@ -9,19 +8,65 @@ import com.orientechnologies.orient.core.record.ORecord;
 import com.orientechnologies.orient.core.serialization.OSerializableStream;
 import org.fao.fenix.commons.msd.dto.templates.ResponseHandler;
 import org.fao.fenix.commons.msd.dto.templates.identification.DSD;
+import org.fao.fenix.commons.msd.dto.templates.standard.metadata.OjPeriod;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class MeIdentification extends ResponseHandler {
-    private Collection<org.fao.fenix.commons.msd.dto.templates.identification.MeIdentification> children;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
 
     public MeIdentification() {}
     public MeIdentification(Object ... source) {
         super(source);
     }
+
+    @JsonProperty
+    public String getUid() {
+        return null;
+    }
+    @JsonProperty
+    public String getVersion() {
+        return null;
+    }
+    @JsonProperty
+    public Map<String, String> getTitle() {
+        return null;
+    }
+    @JsonProperty
+    public MeContent getMeContent() {
+        return null;
+    }
+    @JsonProperty
+    public DSD getDsd() {
+        return null;
+    }
+
+    @JsonProperty
+    public Long getSampleSize() {
+        Map<String,Object> additions = getAdditions();
+        Map<String,Object> populationInformation = additions!=null ? (Map<String,Object>)additions.get("sampledPopulationInformation") : null;
+        Number populationSize = populationInformation!=null ? (Number) populationInformation.get("sampleSize") : null;
+        return populationSize!=null ? populationSize.longValue() : null;
+    }
+    @JsonProperty
+    public Integer getYear() {
+        MeContent meContent = getMeContent();
+        SeCoverage seCoverage = meContent!=null ? meContent.getSeCoverage() : null;
+        OjPeriod ojPeriod = seCoverage!=null ? seCoverage.getCoverageTime() : null;
+        Date date = ojPeriod!=null ? ojPeriod.getFrom() : null;
+        return date!=null ? new Integer(dateFormat.format(date)) : null;
+    }
+
+    public Map<String,Object> getAdditions() {
+        return null;
+    }
+
+
+
+    //Utils
 
     @Override
     public ORID getORID() {
@@ -131,35 +176,6 @@ public class MeIdentification extends ResponseHandler {
                 return 0;
             }
         };
-    }
-
-    @JsonProperty
-    public String getUid() {
-        return null;
-    }
-    @JsonProperty
-    public String getVersion() {
-        return null;
-    }
-    @JsonProperty
-    public Map<String, String> getTitle() {
-        return null;
-    }
-    @JsonProperty
-    public DSD getDsd() {
-        return null;
-    }
-
-    @JsonProperty
-    public Long getSampleSize() {
-        Map<String,Object> additions = getAdditions();
-        Map<String,Object> populationInformation = additions!=null ? (Map<String,Object>)additions.get("sampledPopulationInformation") : null;
-        Number populationSize = populationInformation!=null ? (Number) populationInformation.get("sampleSize") : null;
-        return populationSize!=null ? populationSize.longValue() : null;
-    }
-
-    public Map<String,Object> getAdditions() {
-        return null;
     }
 
 }
