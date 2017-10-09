@@ -93,6 +93,39 @@ public class D3SClient {
         return response.readEntity(String.class);
     }
 
+
+    //TMP
+
+    public Resource<DSDDataset, Object[]> getCstatDataset(String baseUrl, String uid, String version) throws Exception {
+        String responseBody = getCstatResource(baseUrl, uid, version);
+        return JSONUtils.decode(responseBody,Resource.class, DSDDataset.class, Object[].class);
+    }
+    private String getCstatResource(String baseUrl, String uid, String version) throws Exception{
+        //Create URL
+        StringBuilder url = new StringBuilder(baseUrl).append("msd/resources/");
+        if (version==null)
+            url.append("uid/");
+        url.append(uid);
+        if (version!=null)
+            url.append('/').append(version);
+        //Create query parameters
+        Map<String,String> parameters = new HashMap<>();
+        parameters.put("dsd","true");
+        parameters.put("full","true");
+        parameters.put("language","EN,FR");
+        //Send request
+        Response response = sendRequest(addQueryParameters(url.toString(),parameters), null, "get");
+        if (response.getStatus() != 200)
+            throw new Exception("Error from D3S loading resource");
+        //Parse responseObjectMapper
+        return response.readEntity(String.class);
+    }
+
+    //END-TMP
+
+
+
+
     public MeIdentification<DSDDataset> getDatasetMetadata(String baseUrl, String uid, String version) throws Exception {
         String responseBody = getMetadata(baseUrl, uid, version);
         return JSONUtils.decode(responseBody, MeIdentification.class, DSDDataset.class);
