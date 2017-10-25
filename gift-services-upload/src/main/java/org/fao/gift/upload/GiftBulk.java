@@ -69,8 +69,8 @@ public class GiftBulk implements PostUpload {
             //Publish temporary data
             dataManager.publishData(connection, surveyCode);
             //Transfer source file for bulk download
-            //fileManager.publishSurveyFile(file, surveyCode); //original
-            fileManager.publishSurveyFile(this.getClass().getResourceAsStream("/gift/data/emptySurvey.zip"), surveyCode); //temporary
+            fileManager.publishSurveyFile(file, surveyCode); //original
+            //fileManager.publishSurveyFile(this.getClass().getResourceAsStream("/gift/data/emptySurvey.zip"), surveyCode); //temporary
             //Update metadata
             metadataManager.updateSurveyMetadata(surveyCode);
             metadataManager.updateProcessingDatasetsMetadata(surveyCode);
