@@ -87,6 +87,7 @@ public class MailService {
 
             message.setContent(body, DEFAULT_CONTENT_TYPE.concat("; charset=utf-8"));
             message.setFrom(InternetAddress.parse(config.get("gift.mail.sender"))[0]);
+            message.setReplyTo(InternetAddress.parse(config.get("gift.mail.replyto")));
 
             message.saveChanges();
             Transport.send(message);

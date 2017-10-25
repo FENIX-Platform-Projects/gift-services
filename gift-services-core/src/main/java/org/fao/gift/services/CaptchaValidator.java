@@ -40,6 +40,9 @@ public class CaptchaValidator {
         try {
             final String VERIFY_URL = config.get("gift.disclaimer.captcha.url");
             final String SECRET = config.get("gift.disclaimer.captcha.secret");
+
+            log.info("Sending 'POST' request to URL: {}", VERIFY_URL);
+
             URL obj = new URL(VERIFY_URL);
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
