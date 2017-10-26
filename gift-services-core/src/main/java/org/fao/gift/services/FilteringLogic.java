@@ -13,10 +13,12 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class FilteringLogic {
-    @Inject MainConfig config;
-    @Inject FilteringDao filteringDao;
-    @Inject D3SClient d3SClient;
-
+    @Inject
+    MainConfig config;
+    @Inject
+    FilteringDao filteringDao;
+    @Inject
+    D3SClient d3SClient;
 
 
     public Collection<MeIdentification<DSDDataset>> filterForStatistics(StatisticsParameters parameters) throws Exception {
@@ -30,7 +32,8 @@ public class FilteringLogic {
                 parameters.countries,
                 parameters.referenceArea,
                 parameters.coverageSector,
-                parameters.year
+                parameters.year,
+                parameters.confidentialityStatus
         );
         //Filter again by data (food and population selectors)
         Set<String> surveysCode = filteringDao.getSurveyCodes(parameters);

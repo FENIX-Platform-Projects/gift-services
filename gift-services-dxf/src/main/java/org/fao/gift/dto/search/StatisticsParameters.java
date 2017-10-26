@@ -15,6 +15,7 @@ public class StatisticsParameters {
     public CodesFilter referenceArea = null;
     public CodesFilter coverageSector = null;
     public TimeFilter year = null;
+    public CodesFilter confidentialityStatus = null;
 
     //Pupulation
     public String gender;
@@ -25,25 +26,28 @@ public class StatisticsParameters {
     public Collection<String> foodex2_code;
 
 
-    public StatisticsParameters() {}
+    public StatisticsParameters() {
+    }
+
     public StatisticsParameters(StandardFilter fenixFilter) throws InvalidPropertiesFormatException {
         init(fenixFilter);
     }
 
-    public void init (StandardFilter fenixFilter) throws InvalidPropertiesFormatException {
+    public void init(StandardFilter fenixFilter) throws InvalidPropertiesFormatException {
         reset();
-        if (fenixFilter!=null) {
+        if (fenixFilter != null) {
             //Metadata fields
-            countries = extractCodesFilter(fenixFilter,"meContent.seCoverage.coverageGeographic");
-            referenceArea = extractCodesFilter(fenixFilter,"meContent.seReferencePopulation.referenceArea");
-            coverageSector = extractCodesFilter(fenixFilter,"meContent.seCoverage.coverageSectors");
+            countries = extractCodesFilter(fenixFilter, "meContent.seCoverage.coverageGeographic");
+            referenceArea = extractCodesFilter(fenixFilter, "meContent.seReferencePopulation.referenceArea");
+            coverageSector = extractCodesFilter(fenixFilter, "meContent.seCoverage.coverageSectors");
             year = extractTimeFilter(fenixFilter, "meContent.seCoverage.coverageTime");
+            confidentialityStatus = extractCodesFilter(fenixFilter, "meAccessibility.seConfidentiality.confidentialityStatus");
             //Data fields
-            gender = extractCode(fenixFilter,"gender");
-            special_condition = extractCodes(fenixFilter,"special_condition");
-            age_year = extractNumberFilter(fenixFilter,"age_year");
-            age_month = extractNumberFilter(fenixFilter,"age_month");
-            foodex2_code = extractCodes(fenixFilter,"foodex2_code");
+            gender = extractCode(fenixFilter, "gender");
+            special_condition = extractCodes(fenixFilter, "special_condition");
+            age_year = extractNumberFilter(fenixFilter, "age_year");
+            age_month = extractNumberFilter(fenixFilter, "age_month");
+            foodex2_code = extractCodes(fenixFilter, "foodex2_code");
         }
     }
 
@@ -53,6 +57,7 @@ public class StatisticsParameters {
         referenceArea = null;
         coverageSector = null;
         year = null;
+        confidentialityStatus = null;
         //Data fields
         gender = null;
         special_condition = null;
@@ -65,24 +70,24 @@ public class StatisticsParameters {
     //Utils
     private NumberFilter extractNumberFilter(StandardFilter fenixFilter, String fieldName) throws InvalidPropertiesFormatException {
         FieldFilter fieldFilter = fenixFilter.get(fieldName);
-        if (fieldFilter!=null) {
-            if (fieldFilter.retrieveFilterType()!=FieldFilterType.number)
-                throw new InvalidPropertiesFormatException(fieldName+" must be a number type filter");
-            if (fieldFilter.number.size()>1)
-                throw new InvalidPropertiesFormatException(fieldName+" must be a single value number type filter");
-            return fieldFilter.number.size()>0 ? fieldFilter.number.iterator().next() : null;
+        if (fieldFilter != null) {
+            if (fieldFilter.retrieveFilterType() != FieldFilterType.number)
+                throw new InvalidPropertiesFormatException(fieldName + " must be a number type filter");
+            if (fieldFilter.number.size() > 1)
+                throw new InvalidPropertiesFormatException(fieldName + " must be a single value number type filter");
+            return fieldFilter.number.size() > 0 ? fieldFilter.number.iterator().next() : null;
         }
         return null;
     }
 
     private TimeFilter extractTimeFilter(StandardFilter fenixFilter, String fieldName) throws InvalidPropertiesFormatException {
         FieldFilter fieldFilter = fenixFilter.get(fieldName);
-        if (fieldFilter!=null) {
-            if (fieldFilter.retrieveFilterType()!=FieldFilterType.time)
-                throw new InvalidPropertiesFormatException(fieldName+" must be a time type filter");
-            if (fieldFilter.time.size()>1)
-                throw new InvalidPropertiesFormatException(fieldName+" must be a single value time type filter");
-            return fieldFilter.time.size()>0 ? fieldFilter.time.iterator().next() : null;
+        if (fieldFilter != null) {
+            if (fieldFilter.retrieveFilterType() != FieldFilterType.time)
+                throw new InvalidPropertiesFormatException(fieldName + " must be a time type filter");
+            if (fieldFilter.time.size() > 1)
+                throw new InvalidPropertiesFormatException(fieldName + " must be a single value time type filter");
+            return fieldFilter.time.size() > 0 ? fieldFilter.time.iterator().next() : null;
         }
         return null;
     }
@@ -90,34 +95,35 @@ public class StatisticsParameters {
 
     private CodesFilter extractCodesFilter(StandardFilter fenixFilter, String fieldName) throws InvalidPropertiesFormatException {
         FieldFilter fieldFilter = fenixFilter.get(fieldName);
-        if (fieldFilter!=null) {
-            if (fieldFilter.retrieveFilterType()!=FieldFilterType.code)
-                throw new InvalidPropertiesFormatException(fieldName+" must be a code type filter");
-            if (fieldFilter.codes.size()>1)
-                throw new InvalidPropertiesFormatException(fieldName+" must be a single code list value");
-            return fieldFilter.codes.size()>0 ? fieldFilter.codes.iterator().next() : null;
+        if (fieldFilter != null) {
+            if (fieldFilter.retrieveFilterType() != FieldFilterType.code)
+                throw new InvalidPropertiesFormatException(fieldName + " must be a code type filter");
+            if (fieldFilter.codes.size() > 1)
+                throw new InvalidPropertiesFormatException(fieldName + " must be a single code list value");
+            return fieldFilter.codes.size() > 0 ? fieldFilter.codes.iterator().next() : null;
         }
         return null;
     }
 
     private String extractCode(StandardFilter fenixFilter, String fieldName) throws InvalidPropertiesFormatException {
         Collection<String> value = extractCodes(fenixFilter, fieldName);
-        if (value!=null && value.size()>1)
-            throw new InvalidPropertiesFormatException(fieldName+" must be a single value code type filter");
-        return value!=null && value.size()==1 ? value.iterator().next() : null;
+        if (value != null && value.size() > 1)
+            throw new InvalidPropertiesFormatException(fieldName + " must be a single value code type filter");
+        return value != null && value.size() == 1 ? value.iterator().next() : null;
     }
+
     private Collection<String> extractCodes(StandardFilter fenixFilter, String fieldName) throws InvalidPropertiesFormatException {
         Collection<String> value = new LinkedList<>();
         FieldFilter fieldFilter = fenixFilter.get(fieldName);
-        if (fieldFilter!=null) {
-            if (fieldFilter.retrieveFilterType()!=FieldFilterType.code)
-                throw new InvalidPropertiesFormatException(fieldName+" must be a code type filter");
+        if (fieldFilter != null) {
+            if (fieldFilter.retrieveFilterType() != FieldFilterType.code)
+                throw new InvalidPropertiesFormatException(fieldName + " must be a code type filter");
 
             for (CodesFilter codesFilter : fieldFilter.codes)
-                if (codesFilter.codes!=null)
+                if (codesFilter.codes != null)
                     value.addAll(codesFilter.codes);
         }
-        return value.size()>0 ? value : null;
+        return value.size() > 0 ? value : null;
     }
 
 
