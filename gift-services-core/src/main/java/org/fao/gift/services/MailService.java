@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
+import javax.ejb.Asynchronous;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.Lock;
 import javax.ejb.Singleton;
@@ -64,7 +65,12 @@ public class MailService {
     }
 
     @Lock(READ)
+    @Asynchronous
     public void sendMail(DownloadNotification downloadNotification) {
+        final String email = downloadNotification.getEmail();
+        final String uid = downloadNotification.getUid();
+
+        log.info("sendMail - START - email: {}, survey {}", email, downloadNotification.getSurveyTitle());
 
         final String name = downloadNotification.getName() != null ? downloadNotification.getName() : "user";
         final String surveyTitle = downloadNotification.getSurveyTitle() != null ? downloadNotification.getSurveyTitle() : "";
@@ -72,15 +78,15 @@ public class MailService {
 
         String disclaimerContent;
         try {
-            disclaimerContent = disclaimerLogic.getDisclaimer(downloadNotification.getUid(), lang);
+            disclaimerContent = disclaimerLogic.getDisclaimer(uid, lang);
         } catch (SQLException e) {
-            log.error("Cannot retrieve disclaimer {}, {}", downloadNotification.getUid(), lang);
+            log.error("Cannot retrieve disclaimer {}, {}", uid, lang);
             disclaimerContent = "";
         }
 
         try {
             Message message = new MimeMessage(session);
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(downloadNotification.getEmail()));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject(config.get("gift.mail.subject"));
 
             String body = MessageFormat.format(loadDownloadEmailTemplate(), name, surveyTitle, disclaimerContent);
@@ -91,6 +97,8 @@ public class MailService {
 
             message.saveChanges();
             Transport.send(message);
+
+            log.info("sendMail - DONE - email: {}, survey {}", email, uid);
 
         } catch (MessagingException e) {
             log.error("Cannot send mail", e);
