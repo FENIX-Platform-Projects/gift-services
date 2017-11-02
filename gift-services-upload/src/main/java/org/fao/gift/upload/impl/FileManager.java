@@ -1,15 +1,24 @@
 package org.fao.gift.upload.impl;
 
-import com.jcraft.jsch.*;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpATTRS;
+import com.jcraft.jsch.SftpException;
 import org.fao.ess.uploader.core.init.UploaderConfig;
-import org.fao.gift.upload.dto.Files;
-import org.fao.gift.upload.dto.HostProperties;
 import org.fao.fenix.commons.utils.FileUtils;
 import org.fao.fenix.commons.utils.UIDUtils;
+import org.fao.gift.upload.dto.Files;
+import org.fao.gift.upload.dto.HostProperties;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -21,9 +30,12 @@ import java.util.Vector;
 
 @ApplicationScoped
 public class FileManager {
-    @Inject private UploaderConfig config;
-    @Inject private FileUtils fileUtils;
-    @Inject private UIDUtils uidUtils;
+    @Inject
+    private UploaderConfig config;
+    @Inject
+    private FileUtils fileUtils;
+    @Inject
+    private UIDUtils uidUtils;
     private File tmpFolder;
     private HostProperties bulkRemoteProperties;
     private HostProperties attachmentRemoteProperties;
@@ -33,7 +45,7 @@ public class FileManager {
     //Temporary folder management
     public File createTmpFolder() throws IOException {
         //Create empty tmp folder
-        if (tmpFolder==null) {
+        if (tmpFolder == null) {
             String tmpFilePath = config.get("gift.local.folder.tmp");
             tmpFolder = new File(tmpFilePath != null ? tmpFilePath : "/tmp");
         }
@@ -46,12 +58,19 @@ public class FileManager {
     public Map<Files, File> unzip(File folder, InputStream zipPackageStream) throws Exception {
         Map<Files, File> recognizedFilesMap = new HashMap<>();
         fileUtils.unzip(zipPackageStream, folder, true);
-        for (File file : folder.listFiles()) {
-            Files recognizedFile = file.isFile() ? Files.get(file.getName()) : null;
-            if (recognizedFile!=null)
-                recognizedFilesMap.put(recognizedFile, file);
-        }
+
+        File[] fileList = folder.listFiles();
+        if (fileList != null)
+            for (File file : fileList) {
+                Files recognizedFile = file.isFile() ? Files.get(file.getName()) : null;
+                if (recognizedFile != null)
+                    recognizedFilesMap.put(recognizedFile, file);
+            }
         return recognizedFilesMap;
+    }
+
+    public static void buildZip(File zipFile, Map<String, InputStream> fileStreamsToInclude, Map<String, File> filesToInclude) throws IOException {
+        FileUtils.zip(zipFile, fileStreamsToInclude, filesToInclude);
     }
 
     public void removeTmpFolder(File folder) throws Exception {
@@ -60,14 +79,11 @@ public class FileManager {
 
     public File saveFile(File tmpFolder, String fileName, InputStream fileInput) throws IOException {
         File destinationFile = new File(tmpFolder, fileName);
-        OutputStream out = new FileOutputStream(destinationFile);
 
         byte[] buffer = new byte[1024];
-        try {
+        try (OutputStream out = new FileOutputStream(destinationFile)) {
             for (int c = fileInput.read(buffer); c > 0; c = fileInput.read(buffer))
                 out.write(buffer, 0, c);
-        } finally {
-            out.close();
         }
         return destinationFile;
     }
@@ -76,11 +92,12 @@ public class FileManager {
     public void publishSurveyFile(File zipFile, String surveyCode) throws Exception {
         publishSurveyFile(new FileInputStream(zipFile), surveyCode);
     }
+
     public void publishSurveyFile(InputStream zipFile, String surveyCode) throws Exception {
         ChannelSftp channel = getConnection();
         try {
             channel.cd(bulkRemoteProperties.getPath());
-            uploadFile(channel,zipFile,"GIFT_Survey_"+surveyCode+".zip");
+            uploadFile(channel, zipFile, "GIFT_Survey_" + surveyCode + ".zip");
         } finally {
             close(channel);
         }
@@ -92,19 +109,17 @@ public class FileManager {
             channel.cd(attachmentRemoteProperties.getPath());
             mkDir(metadataId, channel);
             channel.cd(metadataId);
-            uploadFile(channel,file,file.getName());
+            uploadFile(channel, file, file.getName());
         } finally {
             close(channel);
         }
     }
 
 
-
-
     //SFTP utils
 
     private void initSFTP() throws Exception {
-        if (bulkRemoteProperties ==null)
+        if (bulkRemoteProperties == null)
             bulkRemoteProperties = new HostProperties(
                     null,
                     config.get("gift.remote.host"),
@@ -113,7 +128,7 @@ public class FileManager {
                     config.get("gift.remote.psw"),
                     config.get("gift.remote.path.survey")
             );
-        if (attachmentRemoteProperties ==null)
+        if (attachmentRemoteProperties == null)
             attachmentRemoteProperties = new HostProperties(
                     null,
                     config.get("gift.remote.host"),
@@ -122,7 +137,7 @@ public class FileManager {
                     config.get("gift.remote.psw"),
                     config.get("gift.remote.path.metadata.attachment")
             );
-        if (sharedRemoteProperties==null)
+        if (sharedRemoteProperties == null)
             sharedRemoteProperties = new HostProperties(
                     null,
                     config.get("gift.remote.host"),
@@ -143,27 +158,38 @@ public class FileManager {
         session.setConfig(config);
         session.connect();
 
-        ChannelSftp channel = (ChannelSftp)session.openChannel("sftp");
+        ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
         channel.connect();
         return channel;
     }
+
     private void close(ChannelSftp channel) {
-        try { channel.disconnect(); } catch (Exception ex) {}
-        try { channel.getSession().disconnect(); } catch (Exception ex) {}
+        try {
+            channel.disconnect();
+        } catch (Exception ignored) {
+        }
+        try {
+            channel.getSession().disconnect();
+        } catch (Exception ignored) {
+        }
     }
 
     private void mkDir(String path, ChannelSftp channel) throws SftpException {
-        SftpATTRS attributes=null;
-        try { attributes = channel.stat(path); } catch (Exception e) { }
+        SftpATTRS attributes = null;
+        try {
+            attributes = channel.stat(path);
+        } catch (Exception ignored) {
+        }
         if (attributes == null)
             channel.mkdir(path);
     }
+
     public static void rmDir(String path, ChannelSftp channel) throws SftpException {
         if (!".".equals(path) && !"..".equals(path))
             if (channel.stat(path).isDir()) {
                 channel.cd(path);
                 Vector<ChannelSftp.LsEntry> entries = channel.ls(".");
-                for (ChannelSftp.LsEntry entry: entries)
+                for (ChannelSftp.LsEntry entry : entries)
                     rmDir(entry.getFilename(), channel);
                 channel.cd("..");
                 channel.rmdir(path);
@@ -171,15 +197,21 @@ public class FileManager {
                 channel.rm(path);
             }
     }
+
     private void rmFile(String path, ChannelSftp channel) throws SftpException {
-        SftpATTRS attributes=null;
-        try { attributes = channel.stat(path); } catch (Exception e) { }
+        SftpATTRS attributes = null;
+        try {
+            attributes = channel.stat(path);
+        } catch (Exception ignored) {
+        }
         if (attributes != null)
             channel.rm(path);
     }
+
     private String uploadFile(ChannelSftp channel, File sourceFile, String fileName) throws Exception {
-        return uploadFile(channel, new FileInputStream(sourceFile), fileName==null ? sourceFile.getName() : fileName);
+        return uploadFile(channel, new FileInputStream(sourceFile), fileName == null ? sourceFile.getName() : fileName);
     }
+
     private String uploadFile(ChannelSftp channel, InputStream sourceFile, String fileName) throws Exception {
         DigestInputStream input = new DigestInputStream(sourceFile, MessageDigest.getInstance("MD5"));
         channel.put(input, fileName, null, ChannelSftp.OVERWRITE);
@@ -189,7 +221,7 @@ public class FileManager {
 
     //Other utils
     private String textToFileName(String text) {
-        return text!=null ? text.replaceAll("[^\\w\\d_\\-.àèéìòù]"," ").replaceAll(" +"," ").trim().replace(' ','_') : null;
+        return text != null ? text.replaceAll("[^\\w\\d_\\-.àèéìòù]", " ").replaceAll(" +", " ").trim().replace(' ', '_') : null;
     }
 
 }

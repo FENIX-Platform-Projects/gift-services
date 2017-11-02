@@ -18,10 +18,14 @@ import java.sql.ResultSet;
 public class DataManager {
     private static char CSV_SEPARATOR = ',';
 
-    @Inject private DataSource dataSource;
-    @Inject private DatabaseUtils databaseUtils;
-    @Inject private FileUtils fileUtils;
-    @Inject private UIDUtils uidUtils;
+    @Inject
+    private DataSource dataSource;
+    @Inject
+    private DatabaseUtils databaseUtils;
+    @Inject
+    private FileUtils fileUtils;
+    @Inject
+    private UIDUtils uidUtils;
 
 
     public Connection getConnection() throws Exception {
@@ -30,9 +34,9 @@ public class DataManager {
 
     public void uploadCSV(File csvData, String tmpTableName, Connection connection) throws Exception {
         StringBuilder query = new StringBuilder("COPY ").append(tmpTableName).append(" FROM STDIN WITH CSV HEADER DELIMITER '").append(CSV_SEPARATOR).append("' QUOTE '\"' ENCODING 'UTF8'");
-        CopyIn copier = ((PGConnection)connection).getCopyAPI().copyIn(query.toString());
+        CopyIn copier = ((PGConnection) connection).getCopyAPI().copyIn(query.toString());
         byte[] data = fileUtils.readTextFile(csvData).getBytes();
-        copier.writeToCopy(data,0,data.length);
+        copier.writeToCopy(data, 0, data.length);
         copier.flushCopy();
         copier.endCopy();
     }
@@ -42,11 +46,11 @@ public class DataManager {
         StringBuilder error = new StringBuilder();
         for (ResultSet resultSet = connection.createStatement().executeQuery(Queries.getUnexistingFoodGroup.getQuery()); resultSet.next(); ) {
             String e = resultSet.getString(1);
-            if (e!=null)
+            if (e != null)
                 error.append('\n').append(e);
         }
-        if (error.length()>0)
-            throw new NotAcceptableException("Data have food codes with no group assigned: "+error.toString());
+        if (error.length() > 0)
+            throw new NotAcceptableException("Data have food codes with no group assigned: " + error.toString());
     }
 
     public void cleanTmpData(Connection connection) throws Exception {
@@ -67,9 +71,6 @@ public class DataManager {
         callStatement.setString(1, surveyCode);
         callStatement.execute();
     }
-
-
-
 }
 
 
