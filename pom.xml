@@ -17,6 +17,7 @@
 
         <module>gift-services-upload</module>
         <module>gift-services-dist</module>
+        <module>gift-services-forum-client</module>
     </modules>
 
     <properties>
@@ -65,7 +66,7 @@
 
 
     <dependencies>
-        <!--LOGS-->
+        <!-- LOGS -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -88,14 +89,6 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- Tests -->
-        <dependency>
-            <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se</artifactId>
-            <version>2.3.5.Final</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- REST Client -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -103,7 +96,6 @@
             <version>${resteasy.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson-provider</artifactId>
@@ -111,6 +103,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se</artifactId>
+            <version>2.3.5.Final</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

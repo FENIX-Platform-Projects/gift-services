@@ -17,6 +17,5 @@
             <artifactId>gift-services-dxf</artifactId>
             <version>${project.version}</version>
         </dependency>
-
     </dependencies>
 </project>
