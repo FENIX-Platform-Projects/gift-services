@@ -1,6 +1,7 @@
 package org.fao.gift.rest;
 
 import org.fao.gift.dto.Outcome;
+import org.fao.gift.dto.Survey;
 import org.fao.gift.dto.User;
 import org.fao.gift.rest.spi.UserSpi;
 import org.fao.gift.services.UserLogic;
@@ -13,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.fao.gift.utils.RestUtils.getBaseResponse;
 
@@ -64,6 +66,33 @@ public class UserService implements UserSpi {
 
         } catch (SQLException e) {
             final String ERR_MESSAGE = "Could not persist user";
+            log.error(ERR_MESSAGE, e);
+            return Response.serverError()
+                    .entity(Outcome.create(ERR_MESSAGE))
+                    .build();
+        }
+    }
+
+    private Response getUserSurveys(long forumId) {
+        try {
+            List<Survey> userSurveys = userLogic.getUserSurveys(forumId);
+            return Response.ok(userSurveys).build();
+        } catch (SQLException e) {
+            final String ERR_MESSAGE = "Could not retrieve user's surveys";
+            log.error(ERR_MESSAGE, e);
+            return Response.serverError()
+                    .entity(Outcome.create(ERR_MESSAGE))
+                    .build();
+        }
+    }
+
+    @Override
+    public Response getUserSurveys(String username) {
+        try {
+            List<Survey> userSurveys = userLogic.getUserSurveys(username);
+            return Response.ok(userSurveys).build();
+        } catch (SQLException e) {
+            final String ERR_MESSAGE = "Could not retrieve user's surveys";
             log.error(ERR_MESSAGE, e);
             return Response.serverError()
                     .entity(Outcome.create(ERR_MESSAGE))

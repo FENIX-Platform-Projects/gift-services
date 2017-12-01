@@ -20,6 +20,10 @@ public interface UserSpi {
     @Produces(MediaType.APPLICATION_JSON)
     Response getJwt(@PathParam("username") String username) throws Exception;
 
+    @GET
+    @Path("/{username}/surveys")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response getUserSurveys(@PathParam("username") String username);
 
 //    @POST
 //    @Consumes(MediaType.APPLICATION_JSON)

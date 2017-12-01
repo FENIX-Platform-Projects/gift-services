@@ -1,6 +1,8 @@
 package org.fao.gift.services;
 
+import org.fao.gift.dao.impl.SurveyDao;
 import org.fao.gift.dao.impl.UserDao;
+import org.fao.gift.dto.Survey;
 import org.fao.gift.dto.User;
 import org.fao.gift.dto.UserRole;
 import org.slf4j.Logger;
@@ -8,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserLogic {
 
@@ -16,6 +20,9 @@ public class UserLogic {
 
     @Inject
     private UserDao userDao;
+
+    @Inject
+    private SurveyDao surveyDao;
 
     public User getUser(final String username) throws SQLException {
         log.info("getUser - START - {}", username);
@@ -35,6 +42,14 @@ public class UserLogic {
         if (email == null || email.isEmpty()) missing("E-mail");
 
         userDao.create(forumId, name, username, role, institution, email);
+    }
+
+    public List<Survey> getUserSurveys(final long forumId) throws SQLException {
+        return surveyDao.findSurveysByUser(forumId);
+    }
+
+    public List<Survey> getUserSurveys(final String username) throws SQLException {
+        return surveyDao.findSurveysByUser(username);
     }
 
 
