@@ -27,6 +27,13 @@
     <!-- Dependencies -->
     <dependencies>
 
+        <!-- Commons -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>gift-services-dxf</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- Core -->
         <dependency>
             <groupId>${project.groupId}</groupId>

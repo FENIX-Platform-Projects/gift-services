@@ -1,8 +1,8 @@
 package org.fao.gift.forum.client.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.fao.gift.dto.MainConfig;
 import org.fao.gift.forum.client.ForumClient;
+import org.fao.gift.forum.client.ForumConfigStore;
 import org.fao.gift.forum.client.dto.Category;
 import org.fao.gift.forum.client.dto.CategoryPrivileges;
 import org.fao.gift.forum.client.dto.Post;
@@ -42,7 +42,7 @@ public class ForumClientRest implements ForumClient {
     private static final String USER_ID = "uid";
 
     @Inject
-    MainConfig config;
+    ForumConfigStore config;
 
     public ForumClientRest() {
     }
@@ -77,12 +77,28 @@ public class ForumClientRest implements ForumClient {
 
     // Auxiliary methods
 
+    /**
+     * Create a resource on the forum, according to the type of 'resource'
+     *
+     * @param resource         an object representing a forum resource, like Category, User, Topic or Post
+     * @param apiUrl           the URL of the forum API to invoke
+     * @param resourceTreePath a list of node names expected in the output, from root (excluded) to the node of interest
+     * @param <T>              the type of the resource to be created (e.g. {@link Category}, {@link Topic}, {@link Post}, {@link User})
+     * @return the ID of the created resource.
+     */
     private <T> long create(T resource, String apiUrl, String... resourceTreePath) {
         final Long assignedId = handleRequest(resource, apiUrl, "POST", resourceTreePath).asLong();
         log.info("create - {} - assigned ID {}", resource, assignedId); // the last element of resourceTreePath contains the id label of the resource, e.g. "uid", "cid"
         return assignedId;
     }
 
+    /**
+     * Update a resource on the forum, according to the type of 'resource'
+     *
+     * @param resource an object representing a forum resource, like Category, User, Topic or Post
+     * @param apiUrl   the URL of the forum API to invoke
+     * @param <T>      the type of the resource to be created (e.g. {@link Category}, {@link Topic}, {@link Post}, {@link User})
+     */
     private <T> void set(T resource, String apiUrl) {
         handleRequest(resource, apiUrl, "PUT", RESPONSE_BODY);
         log.info("set - {} - done", resource);
@@ -97,7 +113,7 @@ public class ForumClientRest implements ForumClient {
             response = makeRequest(TARGET_URI, TOKEN, resource, httpMethod);
 
             String responseString = response.readEntity(String.class);
-            log.debug("create - response: {}, code: {}", responseString, response.getStatus());
+            log.debug("handleRequest - response: {}, code: {}", responseString, response.getStatus());
 
             switch (response.getStatus()) {
                 case 200:
@@ -117,6 +133,16 @@ public class ForumClientRest implements ForumClient {
         }
     }
 
+    /**
+     * Fires a REST request
+     *
+     * @param targetURI  URI of the targeted API
+     * @param token      the Bearer token for forum API authentication
+     * @param entity     the resource to be sent to the forum
+     * @param httpMethod the HTTP method, like POST, GET or PUT
+     * @param <T>        the type of the resource to be created (e.g. {@link Category}, {@link Topic}, {@link Post}, {@link User})
+     * @return the forum API Response
+     */
     private static <T> Response makeRequest(String targetURI, String token, T entity, String httpMethod) {
         ResteasyClient client = new ResteasyClientBuilder().build();
         ResteasyWebTarget target = client.target(targetURI);

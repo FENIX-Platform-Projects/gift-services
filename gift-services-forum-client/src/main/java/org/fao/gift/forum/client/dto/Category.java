@@ -1,5 +1,6 @@
 package org.fao.gift.forum.client.dto;
 
+@SuppressWarnings("unused")
 public class Category {
 
     private String name;

@@ -1,5 +1,6 @@
 package org.fao.gift.forum.client.dto;
 
+@SuppressWarnings("unused")
 public class User {
 
     private String username;

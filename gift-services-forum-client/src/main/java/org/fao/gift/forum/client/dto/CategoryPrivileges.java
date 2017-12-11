@@ -14,6 +14,7 @@ package org.fao.gift.forum.client.dto;
 
 import java.util.Arrays;
 
+@SuppressWarnings("unused")
 public class CategoryPrivileges {
 
     private String[] privileges;

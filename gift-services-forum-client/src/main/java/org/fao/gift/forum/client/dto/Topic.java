@@ -1,5 +1,6 @@
 package org.fao.gift.forum.client.dto;
 
+@SuppressWarnings("unused")
 public class Topic {
 
     private Long cid;
