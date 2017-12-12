@@ -1,4 +1,4 @@
-package org.fao.gift.dto.template.statistics;
+package org.fao.gift.commons.dto.template.statistics;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.orientechnologies.orient.core.db.record.OIdentifiable;

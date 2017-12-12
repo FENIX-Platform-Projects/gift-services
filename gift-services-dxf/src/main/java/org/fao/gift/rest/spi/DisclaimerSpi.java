@@ -1,7 +1,7 @@
 package org.fao.gift.rest.spi;
 
-import org.fao.gift.dto.Disclaimer;
-import org.fao.gift.dto.DownloadNotification;
+import org.fao.gift.commons.dto.Disclaimer;
+import org.fao.gift.commons.dto.DownloadNotification;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;

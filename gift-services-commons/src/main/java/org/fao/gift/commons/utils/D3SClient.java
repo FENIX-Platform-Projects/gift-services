@@ -1,10 +1,9 @@
-package org.fao.gift.utils;
+package org.fao.gift.commons.utils;
 
 import org.fao.fenix.commons.find.dto.filter.*;
 import org.fao.fenix.commons.msd.dto.data.ReplicationFilter;
 import org.fao.fenix.commons.msd.dto.data.Resource;
 import org.fao.fenix.commons.msd.dto.full.*;
-import org.fao.fenix.commons.msd.dto.type.DataType;
 import org.fao.fenix.commons.utils.JSONUtils;
 import org.fao.fenix.commons.utils.Language;
 

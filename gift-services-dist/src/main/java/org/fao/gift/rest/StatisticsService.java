@@ -3,7 +3,7 @@ package org.fao.gift.rest;
 import org.fao.fenix.commons.find.dto.filter.StandardFilter;
 import org.fao.fenix.commons.msd.dto.full.DSDDataset;
 import org.fao.fenix.commons.msd.dto.full.MeIdentification;
-import org.fao.gift.dto.search.StatisticsParameters;
+import org.fao.gift.commons.dto.search.StatisticsParameters;
 import org.fao.gift.rest.spi.StatisticsSpi;
 import org.fao.gift.services.FilteringLogic;
 import org.fao.fenix.commons.msd.dto.templates.ResponseBeanFactory;
@@ -27,7 +27,7 @@ public class StatisticsService implements StatisticsSpi {
     private Class getProxyClass(boolean full) {
         if (full)
             return org.fao.fenix.commons.msd.dto.templates.standard.combined.dataset.Metadata.class;
-        return org.fao.gift.dto.template.statistics.MeIdentification.class;
+        return org.fao.gift.commons.dto.template.statistics.MeIdentification.class;
     }
 
 }

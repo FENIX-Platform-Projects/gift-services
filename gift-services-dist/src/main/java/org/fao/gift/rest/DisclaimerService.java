@@ -1,7 +1,7 @@
 package org.fao.gift.rest;
 
-import org.fao.gift.dto.Disclaimer;
-import org.fao.gift.dto.DownloadNotification;
+import org.fao.gift.commons.dto.Disclaimer;
+import org.fao.gift.commons.dto.DownloadNotification;
 import org.fao.gift.rest.spi.DisclaimerSpi;
 import org.fao.gift.services.CaptchaValidator;
 import org.fao.gift.services.DisclaimerLogic;

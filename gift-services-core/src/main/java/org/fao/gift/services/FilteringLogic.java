@@ -3,9 +3,9 @@ package org.fao.gift.services;
 import org.fao.fenix.commons.msd.dto.full.DSDDataset;
 import org.fao.fenix.commons.msd.dto.full.MeIdentification;
 import org.fao.gift.dao.impl.FilteringDao;
-import org.fao.gift.dto.MainConfig;
-import org.fao.gift.dto.search.StatisticsParameters;
-import org.fao.gift.utils.D3SClient;
+import org.fao.gift.commons.dto.MainConfig;
+import org.fao.gift.commons.dto.search.StatisticsParameters;
+import org.fao.gift.commons.utils.D3SClient;
 
 import javax.inject.Inject;
 import java.util.Collection;

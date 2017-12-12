@@ -1,6 +1,6 @@
 package org.fao.gift.dao;
 
-import org.fao.gift.utils.DataSource;
+import org.fao.gift.commons.utils.DataSource;
 
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;

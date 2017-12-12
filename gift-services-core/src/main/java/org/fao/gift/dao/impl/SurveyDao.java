@@ -1,9 +1,8 @@
 package org.fao.gift.dao.impl;
 
 import org.fao.gift.dao.Dao;
-import org.fao.gift.dto.MainConfig;
-import org.fao.gift.dto.Survey;
-import org.fao.gift.dto.User;
+import org.fao.gift.commons.dto.MainConfig;
+import org.fao.gift.commons.dto.Survey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

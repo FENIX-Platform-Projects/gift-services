@@ -1,7 +1,6 @@
 package org.fao.gift.rest.spi;
 
 import org.fao.fenix.commons.find.dto.filter.StandardFilter;
-import org.fao.gift.dto.template.statistics.MeIdentification;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

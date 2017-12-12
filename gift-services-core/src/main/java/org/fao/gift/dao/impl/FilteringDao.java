@@ -2,7 +2,7 @@ package org.fao.gift.dao.impl;
 
 import org.fao.gift.dao.Dao;
 import org.fao.fenix.commons.utils.database.DatabaseUtils;
-import org.fao.gift.dto.search.StatisticsParameters;
+import org.fao.gift.commons.dto.search.StatisticsParameters;
 
 import javax.inject.Inject;
 import java.sql.*;

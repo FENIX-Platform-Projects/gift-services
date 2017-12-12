@@ -32,7 +32,7 @@ public class ResponseInterceptor implements ContainerResponseFilter {
         if (containerRequestContext.getMethod().equals("GET") && Response.Status.OK.equals(containerResponseContext.getStatusInfo()) && httpRequest.getParameter("perPage")!=null)
             containerResponseContext.getHeaders().putSingle("Location", createPagePath(httpRequest));
 
-        //Add UTF-8 as character set
+        //Add UTF-8 config character set
         addCharsetToResponseContentType(containerResponseContext);
     }
 

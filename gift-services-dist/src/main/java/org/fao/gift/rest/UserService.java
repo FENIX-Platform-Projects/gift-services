@@ -1,8 +1,8 @@
 package org.fao.gift.rest;
 
-import org.fao.gift.dto.Outcome;
-import org.fao.gift.dto.Survey;
-import org.fao.gift.dto.User;
+import org.fao.gift.commons.dto.Outcome;
+import org.fao.gift.commons.dto.Survey;
+import org.fao.gift.commons.dto.User;
 import org.fao.gift.rest.spi.UserSpi;
 import org.fao.gift.services.UserLogic;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response.Status;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.fao.gift.utils.RestUtils.getBaseResponse;
+import static org.fao.gift.commons.utils.RestUtils.getBaseResponse;
 
 
 @Path("user")

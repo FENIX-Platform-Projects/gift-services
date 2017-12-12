@@ -13,7 +13,7 @@ public class JsonUtil {
      * Retrieve a JsonNode, given the path of its ancestors' names
      *
      * @param jsonString a JSON string
-     * @param nodes      the path of its ancestors' ad its own name as the last element (e.g. "payload", "uid")
+     * @param nodes      the path of its ancestors' ad its own name config the last element (e.g. "payload", "uid")
      * @return the {@link JsonNode} of the specified element
      * @throws IOException in case of deserialization problems
      */

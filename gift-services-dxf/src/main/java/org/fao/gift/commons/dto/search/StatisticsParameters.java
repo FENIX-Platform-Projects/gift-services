@@ -1,4 +1,4 @@
-package org.fao.gift.dto.search;
+package org.fao.gift.commons.dto.search;
 
 import org.fao.fenix.commons.find.dto.filter.*;
 import org.fao.fenix.commons.find.dto.type.FieldFilterType;

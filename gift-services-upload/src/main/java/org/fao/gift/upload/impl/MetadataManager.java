@@ -3,12 +3,11 @@ package org.fao.gift.upload.impl;
 import org.fao.ess.uploader.core.init.UploaderConfig;
 import org.fao.fenix.commons.msd.dto.full.*;
 import org.fao.fenix.commons.msd.dto.type.DocumentType;
-import org.fao.gift.dto.MainConfig;
+import org.fao.gift.commons.dto.MainConfig;
 import org.fao.gift.upload.dto.Items;
 import org.fao.gift.upload.dto.MetadataTemplates;
-import org.fao.gift.utils.D3SClient;
+import org.fao.gift.commons.utils.D3SClient;
 import org.fao.fenix.commons.utils.FileUtils;
-import org.fao.fenix.commons.utils.Groups;
 import org.fao.fenix.commons.utils.JSONUtils;
 
 import javax.inject.Inject;

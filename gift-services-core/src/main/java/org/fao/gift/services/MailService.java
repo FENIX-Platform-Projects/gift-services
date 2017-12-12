@@ -1,7 +1,7 @@
 package org.fao.gift.services;
 
-import org.fao.gift.dto.DownloadNotification;
-import org.fao.gift.dto.MainConfig;
+import org.fao.gift.commons.dto.DownloadNotification;
+import org.fao.gift.commons.dto.MainConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,7 +108,7 @@ public class MailService {
     /**
      * Loads the entire email template file
      *
-     * @return the template file as a {@link String} object
+     * @return the template file config a {@link String} object
      */
     private String loadDownloadEmailTemplate() {
         if (emailTemplate == null) {

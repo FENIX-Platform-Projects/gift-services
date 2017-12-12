@@ -18,6 +18,7 @@
         <module>gift-services-upload</module>
         <module>gift-services-dist</module>
         <module>gift-services-forum-client</module>
+        <module>gift-services-notification</module>
     </modules>
 
     <properties>

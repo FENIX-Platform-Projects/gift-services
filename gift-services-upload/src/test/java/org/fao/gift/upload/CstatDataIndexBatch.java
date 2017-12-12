@@ -8,7 +8,7 @@ import org.fao.fenix.commons.msd.dto.data.Resource;
 import org.fao.fenix.commons.msd.dto.full.DSDColumn;
 import org.fao.fenix.commons.msd.dto.full.DSDDataset;
 import org.fao.fenix.commons.msd.dto.full.MeIdentification;
-import org.fao.gift.utils.D3SClient;
+import org.fao.gift.commons.utils.D3SClient;
 import org.junit.Before;
 import org.junit.Test;
 

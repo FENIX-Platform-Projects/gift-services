@@ -1,4 +1,4 @@
-package org.fao.gift.dto;
+package org.fao.gift.commons.dto;
 
 public class HostProperties {
     private String protocol;

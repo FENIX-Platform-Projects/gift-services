@@ -1,10 +1,7 @@
 package org.fao.gift.services;
 
 import org.fao.gift.dao.impl.SurveyDao;
-import org.fao.gift.dao.impl.UserDao;
-import org.fao.gift.dto.Survey;
-import org.fao.gift.dto.User;
-import org.fao.gift.dto.UserRole;
+import org.fao.gift.commons.dto.Survey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

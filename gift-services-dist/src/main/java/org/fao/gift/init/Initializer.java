@@ -1,16 +1,14 @@
 package org.fao.gift.init;
 
 import org.fao.ess.uploader.core.init.UploaderConfig;
-import org.fao.gift.dto.HostProperties;
-import org.fao.gift.dto.MainConfig;
-import org.fao.gift.utils.DataSource;
+import org.fao.gift.commons.dto.MainConfig;
+import org.fao.gift.commons.utils.DataSource;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.ws.rs.WebApplicationException;
-import java.util.Map;
 
 @WebListener
 public class Initializer implements ServletContextListener {

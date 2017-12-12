@@ -1,6 +1,6 @@
 package org.fao.gift.config;
 
-import org.fao.gift.dto.MainConfig;
+import org.fao.gift.commons.dto.MainConfig;
 
 import javax.inject.Inject;
 

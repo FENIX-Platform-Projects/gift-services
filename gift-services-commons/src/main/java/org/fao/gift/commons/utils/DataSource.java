@@ -1,4 +1,4 @@
-package org.fao.gift.utils;
+package org.fao.gift.commons.utils;
 
 
 import org.postgresql.Driver;
