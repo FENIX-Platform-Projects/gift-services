@@ -1,10 +1,10 @@
 package org.fao.gift.dao.impl;
 
 import org.fao.gift.dao.Dao;
-import org.fao.gift.commons.dto.MainConfig;
-import org.fao.gift.commons.dto.User;
-import org.fao.gift.commons.dto.UserRole;
-import org.fao.gift.commons.utils.JwtUtils;
+import org.fao.gift.common.dto.MainConfig;
+import org.fao.gift.common.dto.User;
+import org.fao.gift.common.dto.UserRole;
+import org.fao.gift.common.utils.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

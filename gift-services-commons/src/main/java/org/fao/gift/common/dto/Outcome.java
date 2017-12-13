@@ -1,4 +1,4 @@
-package org.fao.gift.commons.dto;
+package org.fao.gift.common.dto;
 
 import javax.ws.rs.core.Response;
 

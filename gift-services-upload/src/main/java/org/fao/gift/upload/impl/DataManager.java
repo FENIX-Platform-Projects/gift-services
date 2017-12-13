@@ -1,7 +1,7 @@
 package org.fao.gift.upload.impl;
 
 import org.fao.gift.upload.dto.Queries;
-import org.fao.gift.commons.utils.DataSource;
+import org.fao.gift.common.utils.DataSource;
 import org.fao.fenix.commons.utils.FileUtils;
 import org.fao.fenix.commons.utils.UIDUtils;
 import org.fao.fenix.commons.utils.database.DatabaseUtils;

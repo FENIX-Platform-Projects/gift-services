@@ -2,7 +2,7 @@ package org.fao.gift.rest.spi;
 
 import org.fao.fenix.commons.msd.dto.templates.identification.MeIdentification;
 import org.fao.fenix.commons.utils.PATCH;
-import org.fao.gift.commons.dto.User;
+import org.fao.gift.common.dto.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,7 +26,7 @@ public interface NotificationSpi {
     @Path("/metadata")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> MeIdentification updateMetadata(T metadata) throws Exception;
+    public <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> MeIdentification updateMetadata(User user,T metadata) throws Exception;
 
 
     /**
@@ -36,7 +36,7 @@ public interface NotificationSpi {
     @Path("/metadata")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> MeIdentification appendMetadata(T metadata) throws Exception;
+    public <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> MeIdentification appendMetadata(User user,T metadata) throws Exception;
 
 
     @DELETE

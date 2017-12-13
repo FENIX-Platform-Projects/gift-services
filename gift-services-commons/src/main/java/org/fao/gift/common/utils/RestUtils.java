@@ -1,6 +1,6 @@
-package org.fao.gift.commons.utils;
+package org.fao.gift.common.utils;
 
-import org.fao.gift.commons.dto.Outcome;
+import org.fao.gift.common.dto.Outcome;
 
 import javax.ws.rs.core.Response;
 

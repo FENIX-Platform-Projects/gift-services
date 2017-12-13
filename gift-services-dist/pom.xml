@@ -60,6 +60,12 @@
             <artifactId>gift-services-forum-client</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.fao.gift</groupId>
+            <artifactId>gift-services-notification</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>

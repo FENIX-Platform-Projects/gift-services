@@ -41,8 +41,7 @@ public class ForumClientRest implements ForumClient {
     private static final String TOPIC_RESPONSE = "topicData";
     private static final String USER_ID = "uid";
 
-    @Inject
-    ForumConfigStore config;
+    @Inject ForumConfigStore config;
 
     public ForumClientRest() {
     }

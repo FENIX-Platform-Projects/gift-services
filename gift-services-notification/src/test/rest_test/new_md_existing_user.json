@@ -1,0 +1,656 @@
+{
+  "user": {
+    "name": "name_test",
+    "username" : "username",
+    "role":"registered" ,
+    "institution" :"FAO",
+    "email" : "test@test.it"
+  },
+  "metadata": {
+    "title": {
+      "EN": "Towards Sustainable Nutrition Improvement in Rural Mozambique (TSNI) - Baseline survey"
+    },
+    "meContent": {
+      "description": {
+        "EN": "The two-year pilot intervention research project in Central Mozambique aimed to alleviate malnutrition, particularly among young children, through integrating agricultural and nutrition activities. Vitamin-A-rich orange-fleshed sweet potato (OFSP) was selected as the centerpiece of this food-based intervention, as it had high potential as an acceptable and sustainable crop and food. \nThe project, titled Sustainable Nutrition Improvement Project (TSNI), was conducted in 3 drought-prone districts in Zambézia Province. Data collection was completed in March 2005. The TSNI project was a partnership between Michigan State University, the Nutrition Division of the Ministry of Health, World Vision-Mozambique, Helen Keller International, the Southern African Root Crops Research Network (SARRNET), and the National Agronomic Research Institute of Mozambique (INIA). The study was financed by the Micronutrient Initiative, the Rockefeller Foundation, USAID-Washington, and HarvestPlus.\nMore specifically, the TSNI ultimately aimed to increase intakes of vitamin A and\nenergy, particularly among young children (6 months to 4 years of age), and also to increase serum retinol for this vulnerable age group."
+      },
+      "resourceRepresentationType": "dataset",
+      "seReferencePopulation": {
+        "referenceArea": {
+          "codes": [
+            {
+              "code": "2",
+              "label": {
+                "EN": "Sub-national"
+              }
+            }
+          ],
+          "idCodeList": "GIFT_ReferenceArea",
+          "extendedName": {
+            "EN": "WHO-FAO GIFT, area of reference"
+          }
+        }
+      },
+      "seCoverage": {
+        "coverageSectors": {
+          "codes": [
+            {
+              "code": "1",
+              "label": {
+                "EN": "Only rural"
+              }
+            }
+          ],
+          "idCodeList": "GIFT_CoverageSector",
+          "extendedName": {
+            "EN": "WHO-FAO GIFT, coverage sectors"
+          }
+        },
+        "coverageSectorsDetails": {
+          "EN": ""
+        },
+        "coverageTime": {
+          "from": 1059688800000,
+          "to": 1068850800000
+        },
+        "coverageGeographic": {
+          "version": "2014",
+          "codes": [
+            {
+              "code": "170",
+              "label": {
+                "PT": "Moçambique",
+                "FR": "Mozambique",
+                "AR": "موزامبيق",
+                "EN": "Mozambique",
+                "RU": "Мозамбик",
+                "ES": "Mozambique",
+                "ZH": "莫桑比克"
+              }
+            }
+          ],
+          "idCodeList": "GAUL0",
+          "extendedName": {
+            "EN": "Global administrative unit layer country level"
+          }
+        }
+      },
+      "resourceRepresentationTypeLabel": {
+        "EN": "Dataset"
+      }
+    },
+    "meAccessibility": {
+      "seConfidentiality": {
+        "confidentialityStatus": {
+          "codes": [
+            {
+              "code": "3",
+              "label": {
+                "EN": "Existing data potentially suitable to be inserted in FAO/WHO GIFT"
+              }
+            }
+          ],
+          "idCodeList": "GIFT_ConfidentialityStatus",
+          "extendedName": {
+            "EN": "WHO-FAO GIFT, available confidentiality status"
+          }
+        }
+      }
+    },
+    "languageDetails": {
+      "EN": ""
+    },
+    "contacts": [
+      {
+        "position": {
+          "EN": ""
+        },
+        "organization": {
+          "EN": "International Potato Center (CIP), Kenya"
+        },
+        "contactInfo": {
+          "phone": "",
+          "emailAddress": "fao-who-gift@fao.org",
+          "contactInstruction": {
+            "EN": ""
+          },
+          "address": ""
+        },
+        "pointOfContact": "Jan Low",
+        "specify": {
+          "EN": ""
+        },
+        "organizationUnit": {
+          "EN": ""
+        }
+      }
+    ],
+    "additions": {
+      "DataAnalysisInformation": {
+        "ExclusionRecruitment": {
+          "EN": ""
+        },
+        "ExclusionDataCleaning": {
+          "EN": ""
+        },
+        "MethodReporting": {
+          "EN": ""
+        },
+        "ReportingIndividualLevel": {
+          "underReportingPercentage": 0,
+          "overReportingPercentage": 0
+        },
+        "ReportingGroupLevel": {
+          "underReporting": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "no",
+                "label": {
+                  "EN": "No"
+                }
+              }
+            ]
+          },
+          "overReporting": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "no",
+                "label": {
+                  "EN": "No"
+                }
+              }
+            ]
+          }
+        },
+        "DataAlreadyCorrected": {
+          "idCodeList": "YesNo",
+          "codes": [
+            {
+              "code": "no",
+              "label": {
+                "EN": "No"
+              }
+            }
+          ]
+        },
+        "AssessmentIntake": {
+          "EN": ""
+        }
+      },
+      "sampledPopulationInformation": {
+        "sampleSize": 826,
+        "statisticalPopulation": {
+          "idCodeList": "GIFT_StatisticalPopulation",
+          "codes": [
+            {
+              "code": "2",
+              "label": {
+                "EN": "Specific population"
+              }
+            }
+          ]
+        },
+        "PopulationGroups": [
+          {
+            "PopulationGroupsList": {
+              "EN": "Children 6-38 months old"
+            }
+          }
+        ],
+        "PurposedlyGroupsDetails": {
+          "EN": ""
+        },
+        "MinumumAge": 0.5,
+        "MaximumAge": 3
+      },
+      "FoodCompositionInformation": {
+        "FoodComsumption": {
+          "EN": "The majority of nutrient values for foods as eaten came from version 16 of the USDA food composition table and an East African FCT. For OFSP (cooked), a value of 788 mg/100 g was used, reflecting values found in varieties used in SSA, which on average are lower than USDA values."
+        },
+        "MacroDietaryComponents": {
+          "idCodeList": "GIFT_Macronutrients",
+          "codes": [
+            {
+              "code": "1",
+              "label": {
+                "EN": "Total energy"
+              }
+            },
+            {
+              "code": "3",
+              "label": {
+                "EN": "Total protein"
+              }
+            },
+            {
+              "code": "6",
+              "label": {
+                "EN": "Total fat"
+              }
+            }
+          ]
+        },
+        "MicroDietaryComponents": {
+          "idCodeList": "GIFT_Micronutrients",
+          "codes": [
+            {
+              "code": "11",
+              "label": {
+                "EN": "Vitamin A"
+              }
+            },
+            {
+              "code": "01",
+              "label": {
+                "EN": "Calcium"
+              }
+            },
+            {
+              "code": "02",
+              "label": {
+                "EN": "Iron"
+              }
+            },
+            {
+              "code": "03",
+              "label": {
+                "EN": "Zinc"
+              }
+            },
+            {
+              "code": "04",
+              "label": {
+                "EN": "Vitamin C"
+              }
+            },
+            {
+              "code": "05",
+              "label": {
+                "EN": "Vitamin B1 (Thiamin)"
+              }
+            },
+            {
+              "code": "06",
+              "label": {
+                "EN": "Vitamin B2 (Riboflavin)"
+              }
+            },
+            {
+              "code": "07",
+              "label": {
+                "EN": "Vitamin B3 (Niacin)"
+              }
+            },
+            {
+              "code": "08",
+              "label": {
+                "EN": "Vitamin B6 (Pyridoxine)"
+              }
+            },
+            {
+              "code": "09",
+              "label": {
+                "EN": "Vitamin B9 (Folate)"
+              }
+            },
+            {
+              "code": "10",
+              "label": {
+                "EN": "Vitamin B12 (Cobalamin)"
+              }
+            },
+            {
+              "code": "12",
+              "label": {
+                "EN": "Beta-carotene"
+              }
+            }
+          ]
+        },
+        "MicroDietaryComponentsDetails": [
+          {
+            "MicroDietaryComponentsDetailsList": {
+              "EN": "Retinol"
+            }
+          }
+        ]
+      },
+      "AdditionalInformation": {
+        "VariablesAvailability": {
+          "Age": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "yes",
+                "label": {
+                  "EN": "Yes"
+                }
+              }
+            ]
+          },
+          "Sex": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "yes",
+                "label": {
+                  "EN": "Yes"
+                }
+              }
+            ]
+          },
+          "BodyWeight": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "yes",
+                "label": {
+                  "EN": "Yes"
+                }
+              }
+            ]
+          },
+          "BodyHeight": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "yes",
+                "label": {
+                  "EN": "Yes"
+                }
+              }
+            ]
+          },
+          "PhysicalActivityLevel": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "no",
+                "label": {
+                  "EN": "No"
+                }
+              }
+            ]
+          },
+          "InterviewDate": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "no",
+                "label": {
+                  "EN": "No"
+                }
+              }
+            ]
+          },
+          "GeographicalLocalization": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "no",
+                "label": {
+                  "EN": "No"
+                }
+              }
+            ]
+          }
+        },
+        "OtherVariablesAvailability": {
+          "SocioDemographic": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "yes",
+                "label": {
+                  "EN": "Yes"
+                }
+              }
+            ]
+          },
+          "EducationLiteracy": {
+            "idCodeList": "YesNo",
+            "codes": [
+              {
+                "code": "yes",
+                "label": {
+                  "EN": "Yes"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "SamplingInformation": {
+        "typeOfCollection": {
+          "idCodeList": "GIFT_TypeOfCollection",
+          "codes": [
+            {
+              "code": "5",
+              "label": {
+                "EN": "Multistage sampling"
+              }
+            }
+          ]
+        },
+        "SamplingInformationDetails": {
+          "EN": ""
+        }
+      },
+      "GeneralInformation": {
+        "Resource": [
+          {
+            "ResourceType": {
+              "idCodeList": "GIFT_ResourceType",
+              "codes": [
+                {
+                  "code": "3",
+                  "label": {
+                    "EN": "Scientific article"
+                  }
+                }
+              ]
+            },
+            "ResourceDetails": {
+              "EN": ""
+            },
+            "ResourceCite": {
+              "EN": ""
+            },
+            "ResourceLink": {
+              "EN": "http://jn.nutrition.org/content/137/5/1320.abstract"
+            }
+          },
+          {
+            "ResourceType": {
+              "idCodeList": "GIFT_ResourceType",
+              "codes": [
+                {
+                  "code": "2",
+                  "label": {
+                    "EN": "Survey report"
+                  }
+                }
+              ]
+            },
+            "ResourceDetails": {
+              "EN": ""
+            },
+            "ResourceCite": {
+              "EN": ""
+            },
+            "ResourceLink": {
+              "EN": "http://fsg.afre.msu.edu/tsni/TSNI1_TEXT&FIG_YR1_TECH_REPORT.pdf"
+            }
+          }
+        ]
+      },
+      "SurveyInformation": {
+        "GeographicalCoverageDetails": {
+          "EN": "3 districts (Mopeia, Namacurra, and Nicoadala) of Zambézia Province (Central Mozambique)"
+        },
+        "StudyAreasDetails": {
+          "EN": ""
+        },
+        "SeasonsCoverage": {
+          "EN": ""
+        },
+        "AssessmentMethod": {
+          "idCodeList": "GIFT_DietaryMethod",
+          "codes": [
+            {
+              "code": "1",
+              "label": {
+                "EN": "24-hour recall"
+              }
+            }
+          ]
+        },
+        "AssessmentMethodDetails": {
+          "EN": ""
+        },
+        "RepeatedDietary": {
+          "idCodeList": "YesNo",
+          "codes": [
+            {
+              "code": "no",
+              "label": {
+                "EN": "No"
+              }
+            }
+          ]
+        },
+        "SizeOfSample": {
+          "EN": ""
+        },
+        "SurveyAdministrationMethod": {
+          "idCodeList": "GIFT_DataCollection",
+          "codes": [
+            {
+              "code": "1",
+              "label": {
+                "EN": "Paper questionnaire"
+              }
+            }
+          ]
+        },
+        "SurveyAdministrationMethodDetails": {
+          "EN": ""
+        }
+      },
+      "FoodConsumptionInformation": {
+        "FoodCoverageTotal": {
+          "idCodeList": "YesNo",
+          "codes": [
+            {
+              "code": "yes",
+              "label": {
+                "EN": "Yes"
+              }
+            }
+          ]
+        },
+        "FoodCoverageDetails": {
+          "EN": ""
+        },
+        "DrinkingWater": {
+          "idCodeList": "YesNo",
+          "codes": [
+            {
+              "code": "yes",
+              "label": {
+                "EN": "Yes"
+              }
+            }
+          ]
+        },
+        "SupplementInformation": {
+          "idCodeList": "YesNo",
+          "codes": [
+            {
+              "code": "no",
+              "label": {
+                "EN": "No"
+              }
+            }
+          ]
+        },
+        "SupplementInformationDetails": {
+          "EN": ""
+        },
+        "NumberOfFood": 1,
+        "PortionSizes": {
+          "EN": "24-h recall data was obtained using volumetric estimates of quantities consumed. Enumerators were carefully trained and carried containers marked in milliliters. For ingredients such as rice and flour, the person who had prepared the food was asked to demonstrate how much she used of each ingredient, using her own container or other method (e.g. handfuls). Then the enumerator transferred that amount into a container to estimate volume. In the case of vegetables such as tomatoes, enumerators carried small-, medium-, and large-sized models and asked the respondent to specify the size and quantity of each used."
+        },
+        "RecipesManagement": {
+          "EN": "In addition to estimating the amount of each ingredient, the enumerators estimated the total volume of any prepared dish and the volume leftover. Finally, the respondent was asked to demonstrate the amount of each dish or ingredient consumed by the child.\nFor commonly eaten mixed dishes (n = 17), volumes of foods as eaten (raw or cooked) were determined using raw-to-cooked conversion factors obtained through in-home observations."
+        },
+        "QuantitiesReported": {
+          "idCodeList": "GIFT_QuantityReporting",
+          "codes": [
+            {
+              "code": "1",
+              "label": {
+                "EN": "Edible amount consumed before processing"
+              }
+            }
+          ]
+        },
+        "QuantitiesReportedDetails": {
+          "EN": ""
+        }
+      }
+    },
+    "meInstitutionalMandate": {
+      "legalActsAgreements": {
+        "EN": ""
+      },
+      "institutionalMandateDataSharing": {
+        "EN": ""
+      }
+    },
+    "meMaintenance": {
+      "seUpdate": {
+        "updateDate": 1511533782313
+      }
+    },
+    "meStatisticalProcessing": {
+      "seDataSource": {
+        "sePrimaryDataCollection": {
+          "samplingProcedure": {
+            "EN": ""
+          }
+        },
+        "seSecondaryDataCollection": {
+          "organization": {
+            "EN": "Michigan State University"
+          }
+        }
+      },
+      "seDataCompilation": {
+        "missingData": {
+          "EN": ""
+        },
+        "weights": {
+          "EN": ""
+        }
+      }
+    },
+    "language": {
+      "version": "1998",
+      "codes": [
+        {
+          "code": "eng",
+          "label": {
+            "EN": "English"
+          }
+        }
+      ],
+      "idCodeList": "GIFT_ISO639-2",
+      "extendedName": {
+        "EN": "International Standard Organization - Language"
+      }
+    }
+  }
+}

@@ -2,9 +2,9 @@ package org.fao.gift.services;
 
 import org.fao.gift.dao.impl.SurveyDao;
 import org.fao.gift.dao.impl.UserDao;
-import org.fao.gift.commons.dto.Survey;
-import org.fao.gift.commons.dto.User;
-import org.fao.gift.commons.dto.UserRole;
+import org.fao.gift.common.dto.Survey;
+import org.fao.gift.common.dto.User;
+import org.fao.gift.common.dto.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package org.fao.gift.commons.dto;
+package org.fao.gift.common.dto;
 
 @SuppressWarnings("unused")
 public class DownloadNotification {

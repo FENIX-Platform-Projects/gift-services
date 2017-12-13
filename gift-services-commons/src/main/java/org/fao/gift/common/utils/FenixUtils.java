@@ -1,4 +1,4 @@
-package org.fao.gift.commons.utils;
+package org.fao.gift.common.utils;
 
 import org.fao.fenix.commons.find.dto.filter.CodesFilter;
 import org.fao.fenix.commons.find.dto.filter.TimeFilter;

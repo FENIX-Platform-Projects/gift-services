@@ -1,7 +1,8 @@
-package org.fao.gift.services;
+package org.fao.gift.rest;
 
-import org.fao.gift.commons.dto.DownloadNotification;
-import org.fao.gift.commons.dto.MainConfig;
+import org.fao.gift.common.dto.DownloadNotification;
+import org.fao.gift.common.dto.MainConfig;
+import org.fao.gift.services.DisclaimerLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,5 +124,6 @@ public class MailService {
         }
         return emailTemplate;
     }
+
 
 }

@@ -1,8 +1,8 @@
 package org.fao.gift.init;
 
 import org.fao.ess.uploader.core.init.UploaderConfig;
-import org.fao.gift.commons.dto.MainConfig;
-import org.fao.gift.commons.utils.DataSource;
+import org.fao.gift.common.dto.MainConfig;
+import org.fao.gift.common.utils.DataSource;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;

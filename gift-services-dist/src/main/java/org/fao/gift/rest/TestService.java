@@ -1,5 +1,6 @@
 package org.fao.gift.rest;
 
+import org.fao.gift.common.dto.DownloadNotification;
 import org.fao.gift.forum.client.impl.ForumClientRest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ public class TestService {
 //    @Inject
 //    GiftBulk giftBulkManager;
 
+    @Inject MailService mailService;
+
     @Inject
     ForumClientRest forumClientRest;
 
@@ -26,6 +29,29 @@ public class TestService {
     public String getProcessStatus() {
         try {
             return "OK";
+
+        } catch (Exception e) {
+            log.error("", e);
+            return "ERROR: " + e.getMessage();
+        }
+    }
+
+
+    @GET
+    @Path("mail")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String testEmailStatus() {
+        try {
+        DownloadNotification notification = new DownloadNotification();
+        notification.setEmail("wellington.zandon@affricca.com");
+        notification.setLang("en");
+        notification.setName("giovanni");
+        notification.setSurveyTitle("title survey");
+        notification.setUid("test");
+
+        mailService.sendMail(notification);
+
+        return "OK";
 
         } catch (Exception e) {
             log.error("", e);

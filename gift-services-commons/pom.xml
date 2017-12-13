@@ -16,7 +16,7 @@
             <artifactId>postgresql</artifactId>
             <version>${postgresql.jdbc.version}</version>
         </dependency>
-        <!-- D3S commons & utils -->
+        <!-- D3S common & utils -->
         <dependency>
             <groupId>org.fao.fenix</groupId>
             <artifactId>fenix-commons-dxf</artifactId>

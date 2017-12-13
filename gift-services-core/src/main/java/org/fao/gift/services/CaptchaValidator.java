@@ -1,6 +1,6 @@
 package org.fao.gift.services;
 
-import org.fao.gift.commons.dto.MainConfig;
+import org.fao.gift.common.dto.MainConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

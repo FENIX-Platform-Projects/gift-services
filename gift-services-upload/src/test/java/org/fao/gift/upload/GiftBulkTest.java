@@ -1,8 +1,8 @@
 package org.fao.gift.upload;
 
 import org.fao.ess.uploader.core.init.UploaderConfig;
-import org.fao.gift.commons.dto.MainConfig;
-import org.fao.gift.commons.utils.DataSource;
+import org.fao.gift.common.dto.MainConfig;
+import org.fao.gift.common.utils.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 

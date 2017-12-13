@@ -1,4 +1,4 @@
-package org.fao.gift.commons.utils;
+package org.fao.gift.common.utils;
 
 import org.fao.fenix.commons.find.dto.filter.*;
 import org.fao.fenix.commons.msd.dto.data.ReplicationFilter;
@@ -24,7 +24,7 @@ import java.util.*;
 @ApplicationScoped
 public class D3SClient {
     @Inject
-    FenixUtils fenixUtils;
+    org.fao.gift.common.utils.FenixUtils fenixUtils;
 
 
     public Collection<Code> filterCodelist(String baseUrl, String uid, String version, Collection<String> codes) throws Exception {
@@ -192,6 +192,15 @@ public class D3SClient {
                 throw new Exception("Error from D3S adding datasets metadata");
         }
     }
+
+
+    public void insertMetadata(String baseUrl, MeIdentification<DSDDataset> metadata) throws Exception {
+        //Send requests
+        Response response = sendRequest(baseUrl + "msd/resources/metadata",metadata, "post");
+        if (response.getStatus() != 200 && response.getStatus() != 201)
+            throw new Exception("Error from D3S adding datasets metadata");
+    }
+
 
 
     public void updateMetadata(String baseUrl, Collection<MeIdentification<DSDDataset>> metadataList) throws Exception {

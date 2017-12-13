@@ -27,12 +27,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Fenix coomnos -->
-        <dependency>
-            <groupId>org.fao.fenix</groupId>
-            <artifactId>fenix-commons</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
 
 

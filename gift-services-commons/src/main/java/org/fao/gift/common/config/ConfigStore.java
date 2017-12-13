@@ -1,4 +1,4 @@
-package org.fao.gift.commons.config;
+package org.fao.gift.common.config;
 
 public interface ConfigStore {
 
