@@ -85,26 +85,33 @@ public class MailService {
             disclaimerContent = "";
         }
 
+        sendMail(loadDownloadEmailTemplate(), email, name, surveyTitle, disclaimerContent);
+    }
+
+    @Lock(READ)
+    @Asynchronous
+    public void sendMail(String emailTemplate, String emailAddress, String... emailParameters) {
         try {
             Message message = new MimeMessage(session);
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailAddress));
             message.setSubject(config.get("gift.mail.subject"));
 
-            String body = MessageFormat.format(loadDownloadEmailTemplate(), name, surveyTitle, disclaimerContent);
+            String body = MessageFormat.format(emailTemplate, (Object[]) emailParameters);
 
             message.setContent(body, DEFAULT_CONTENT_TYPE.concat("; charset=utf-8"));
             message.setFrom(InternetAddress.parse(config.get("gift.mail.sender"))[0]);
-            message.setReplyTo(InternetAddress.parse(config.get("gift.mail.replyto")));
+//            message.setReplyTo(InternetAddress.parse(config.get("gift.mail.replyto")));
 
             message.saveChanges();
             Transport.send(message);
 
-            log.info("sendMail - DONE - email: {}, survey {}", email, uid);
+            log.info("sendMail - DONE - email: {}", emailAddress);
 
         } catch (MessagingException e) {
             log.error("Cannot send mail", e);
         }
     }
+
 
     /**
      * Loads the entire email template file

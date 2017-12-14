@@ -35,6 +35,10 @@ public class SurveyLogic {
         surveyDao.create(surveyId, categoryId, userId, defaultTopicId);
     }
 
+    public boolean checkOwnership(final String surveyId, final String username) throws SQLException {
+        return surveyDao.isAvailableForUser(username, surveyId);
+    }
+
     private static void missing(String s) {
         throw new IllegalArgumentException(s.concat(MISSING_FIELD_MESSAGE));
     }

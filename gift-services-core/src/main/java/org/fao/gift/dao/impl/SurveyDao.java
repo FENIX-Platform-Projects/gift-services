@@ -144,6 +144,30 @@ public class SurveyDao extends Dao {
         }
     }
 
+    /**
+     * Check if a user-survey association is present for given username and surveyId
+     *
+     * @param username the user's platform username
+     * @param surveyId the survey unique ID
+     * @return true in case the association exist, false otherwise
+     * @throws SQLException in case of problems with the DB
+     */
+    public boolean isAvailableForUser(String username, String surveyId) throws SQLException {
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement("" +
+                    "SELECT * FROM " + TABLE_NAME + " s, " + UserDao.TABLE_NAME + " u, " +
+                    "WHERE s.user_id = u.forum_id " +
+                    "AND u.username = ? " +
+                    "AND s.survey_id = ? ");
+
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, surveyId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        }
+    }
+
 
     /**
      * Extract info of a single survey from the given ResultSet
