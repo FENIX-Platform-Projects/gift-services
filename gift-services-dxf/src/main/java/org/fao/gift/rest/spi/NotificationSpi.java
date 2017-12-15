@@ -1,11 +1,17 @@
 package org.fao.gift.rest.spi;
 
-import org.fao.fenix.commons.msd.dto.templates.identification.MeIdentification;
 import org.fao.fenix.commons.utils.PATCH;
-import org.fao.gift.common.dto.User;
+import org.fao.gift.common.dto.MeWithUser;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 public interface NotificationSpi {
 
@@ -16,7 +22,7 @@ public interface NotificationSpi {
     @Path("/metadata")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> MeIdentification insertMetadata(User user,T metadata) throws Exception;
+    <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> Response insertMetadata(MeWithUser meForum) throws Exception;
 
     /**
      * Modifying an existing metadata
@@ -26,7 +32,7 @@ public interface NotificationSpi {
     @Path("/metadata")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> MeIdentification updateMetadata(User user,T metadata) throws Exception;
+    <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> Response updateMetadata(MeWithUser meForum) throws Exception;
 
 
     /**
@@ -36,13 +42,14 @@ public interface NotificationSpi {
     @Path("/metadata")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> MeIdentification appendMetadata(User user,T metadata) throws Exception;
+    <T extends org.fao.fenix.commons.msd.dto.full.MeIdentification> Response appendMetadata(MeWithUser meForum) throws Exception;
 
 
     @DELETE
     @Path("/metadata/uid/{uid}")
-    public String deleteMetadataByUID(@PathParam("uid") String uid) throws Exception;
+    Response deleteMetadataByUID(@PathParam("uid") String uid) throws Exception;
+
     @DELETE
     @Path("/metadata/{uid}/{version}")
-    public String deleteMetadata(@PathParam("uid") String uid, @PathParam("version") String version) throws Exception;
+    Response deleteMetadata(@PathParam("uid") String uid, @PathParam("version") String version) throws Exception;
 }

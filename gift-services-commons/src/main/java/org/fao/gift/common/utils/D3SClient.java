@@ -194,13 +194,10 @@ public class D3SClient {
     }
 
 
-    public void insertMetadata(String baseUrl, MeIdentification<DSDDataset> metadata) throws Exception {
+    public Response insertMetadata(String baseUrl, MeIdentification<DSDDataset> metadata) throws Exception {
         //Send requests
-        Response response = sendRequest(baseUrl + "msd/resources/metadata",metadata, "post");
-        if (response.getStatus() != 200 && response.getStatus() != 201)
-            throw new Exception("Error from D3S adding datasets metadata");
+        return sendRequest(baseUrl + "/msd/resources/metadata", metadata, "post");
     }
-
 
 
     public void updateMetadata(String baseUrl, Collection<MeIdentification<DSDDataset>> metadataList) throws Exception {

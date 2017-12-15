@@ -8,6 +8,7 @@ import org.fao.gift.forum.client.dto.CategoryPrivileges;
 import org.fao.gift.forum.client.dto.Post;
 import org.fao.gift.forum.client.dto.Topic;
 import org.fao.gift.forum.client.dto.User;
+import org.fao.gift.forum.client.qualifier.Rest;
 import org.fao.gift.forum.client.utils.JsonUtil;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
@@ -15,12 +16,15 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
+@Rest
+@Default
 public class ForumClientRest implements ForumClient {
 
     private static final Logger log = LoggerFactory.getLogger(ForumClientRest.class);
@@ -41,7 +45,8 @@ public class ForumClientRest implements ForumClient {
     private static final String TOPIC_RESPONSE = "topicData";
     private static final String USER_ID = "uid";
 
-    @Inject ForumConfigStore config;
+    @Inject
+    ForumConfigStore config;
 
     public ForumClientRest() {
     }

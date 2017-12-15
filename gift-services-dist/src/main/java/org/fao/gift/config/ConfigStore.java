@@ -1,10 +1,12 @@
 package org.fao.gift.config;
 
 import org.fao.gift.common.dto.MainConfig;
+import org.fao.gift.forum.client.ForumConfigStore;
+import org.fao.gift.notification.NotificationConfigStore;
 
 import javax.inject.Inject;
 
-public class ForumConfigStore implements org.fao.gift.forum.client.ForumConfigStore {
+public class ConfigStore implements ForumConfigStore, NotificationConfigStore {
 
     @Inject
     MainConfig config;
