@@ -27,7 +27,7 @@ public class UserLogic {
         log.info("getUser - START - {}", username);
         if (username == null || username.isEmpty()) missing("Username");
 
-        User foundUser = userDao.find(username);
+        User foundUser = userDao.find(normalize(username));
         log.info("getUser - END - found: {}", foundUser);
         return foundUser;
     }
@@ -40,7 +40,7 @@ public class UserLogic {
         if (institution == null || institution.isEmpty()) missing("Institution");
         if (email == null || email.isEmpty()) missing("E-mail");
 
-        userDao.create(forumId, name, username, role, institution, email);
+        userDao.create(forumId, name, normalize(username), role, institution, email);
     }
 
     public List<Survey> getUserSurveys(final long forumId) throws SQLException {
@@ -48,11 +48,18 @@ public class UserLogic {
     }
 
     public List<Survey> getUserSurveys(final String username) throws SQLException {
-        return surveyDao.findSurveysByUser(username);
+        return surveyDao.findSurveysByUser(normalize(username));
     }
-
 
     private static void missing(String s) {
         throw new IllegalArgumentException(s.concat(MISSING_FIELD_MESSAGE));
+    }
+
+    public static void normalizeUsername(User user) {
+        user.setUsername(normalize(user.getUsername()));
+    }
+
+    public static String normalize(String s) {
+        return s.replaceAll("[@./]", "_");
     }
 }

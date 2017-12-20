@@ -53,7 +53,7 @@ public class ForumClientRest implements ForumClient {
 
     @Override
     public long createUser(String username, String email) {
-        return create(new User(username, email), API_URL.concat(API_USER), RESPONSE_BODY, USER_ID);
+        return create(new User(username, email.toLowerCase()), API_URL.concat(API_USER), RESPONSE_BODY, USER_ID);
     }
 
     @Override

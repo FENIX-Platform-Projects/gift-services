@@ -17,6 +17,8 @@ import javax.inject.Inject;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
+import static org.fao.gift.services.UserLogic.normalizeUsername;
+
 @Path("msd/resources")
 public class NotificationService implements NotificationSpi {
 
@@ -43,10 +45,13 @@ public class NotificationService implements NotificationSpi {
     @Override
     public <T extends MeIdentification> Response insertMetadata(MeWithUser meForum) throws Exception {
         User user = meForum.getUser();
+
         MeIdentification metadata = meForum.getMetadata();
         log.info("insertMetadata - START - {}", user);
         if (user == null || user.getUsername() == null)
             throw new IllegalArgumentException("missing user's mandatory info");
+
+        normalizeUsername(user);
 
         User existingUser = userLogic.getUser(user.getUsername());
         long userForumId;
@@ -61,6 +66,7 @@ public class NotificationService implements NotificationSpi {
         } else {
             userForumId = existingUser.getForumId();
         }
+
         Response response = notificationLogic.insertMetadata(user, metadata);
         log.info("insertMetadata - data insertion status code: {}, updating forum. {}", response.getStatus(), user);
 
