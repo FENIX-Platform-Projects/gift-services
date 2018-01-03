@@ -211,6 +211,15 @@ public class D3SClient {
         }
     }
 
+    public Response updateMetadata(String baseUrl, MeIdentification<DSDDataset> metadata) throws Exception {
+        //Send request
+        Response response = sendRequest(baseUrl + "msd/resources/metadata", metadata, "put");
+        if (response.getStatus() != 200 && response.getStatus() != 201)
+            throw new Exception("Error from D3S adding datasets metadata");
+        return response;
+
+    }
+
     public void deleteMetadata(String baseUrl, Collection<MeIdentification<DSDDataset>> metadataList) throws Exception {
         if (metadataList == null || metadataList.size() == 0)
             return;
@@ -227,6 +236,16 @@ public class D3SClient {
         Response response = sendRequest(baseUrl + "msd/resources/massive/delete", filter, "post");
         if (response.getStatus() != 200 && response.getStatus() != 201)
             throw new Exception("Error from D3S requiring existing datasets metadata");
+    }
+
+
+    public Response deleteMetadata(String baseUrl, String uid, String version) throws Exception {
+        //Send request
+        String methodToDelete = version == null? "msd/resources/metadata/uid/"+uid : "msd/resources/metadata/"+uid+"/"+version;
+        Response response = sendRequest(baseUrl + "msd/resources/massive/delete", null, "delete");
+        if (response.getStatus() != 200 && response.getStatus() != 201)
+            throw new Exception("Error from D3S requiring existing datasets metadata");
+        return response;
     }
 
     public void updateCodelists(String baseUrl, Collection<Resource<DSDCodelist, Code>> resourceList) throws Exception {

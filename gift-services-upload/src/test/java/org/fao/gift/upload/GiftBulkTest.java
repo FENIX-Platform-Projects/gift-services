@@ -19,7 +19,7 @@ public class GiftBulkTest {
         giftBulkManager = CDISupport.getInstance(GiftBulk.class);
     }
 
-    @Test
+  /*  @Test
     public void testBUR() throws Exception {
         giftBulkManager.mainLogic("000042BUR201001", this.getClass().getResourceAsStream("/test/burkina_test1.zip"));
     }
@@ -35,6 +35,12 @@ public class GiftBulkTest {
     @Test
     public void testUGA() throws Exception {
         giftBulkManager.mainLogic("000253UGA201001", this.getClass().getResourceAsStream("/test/uganda_test1.zip"));
+    }*/
+
+    @Test
+    public void testBol() throws Exception {
+        giftBulkManager.mainLogic("D3S_21794061232325714207020886619909608751", this.getClass().getResourceAsStream("/test/Bolivia.zip"));
     }
+
 
 }

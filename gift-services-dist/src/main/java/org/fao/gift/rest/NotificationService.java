@@ -44,13 +44,14 @@ public class NotificationService implements NotificationSpi {
 
     @Override
     public <T extends MeIdentification> Response insertMetadata(MeWithUser meForum) throws Exception {
+        // Get user and metadata
         User user = meForum.getUser();
-
         MeIdentification metadata = meForum.getMetadata();
         log.info("insertMetadata - START - {}", user);
         if (user == null || user.getUsername() == null)
             throw new IllegalArgumentException("missing user's mandatory info");
 
+        // Normalize username for special characters
         normalizeUsername(user);
 
         User existingUser = userLogic.getUser(user.getUsername());
@@ -81,9 +82,11 @@ public class NotificationService implements NotificationSpi {
 
             String jsonResponse = response.readEntity(String.class);
             String uid = JsonUtil.resolve(jsonResponse, "uid").asText();
+
             // Save the user-survey association on the DB
             surveyLogic.create(uid, categoryId, userForumId, topicId);
 
+            //Send an email for the creation of the metadata
             mailService.sendMail(MailTemplate.MD_CREATION, user.getEmail(), user.getName(), uid);
             return Response.ok(jsonResponse).build();
         }

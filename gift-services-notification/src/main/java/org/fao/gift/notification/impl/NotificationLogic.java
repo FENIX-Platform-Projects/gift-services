@@ -1,6 +1,7 @@
 package org.fao.gift.notification.impl;
 
 import org.fao.fenix.commons.msd.dto.full.MeIdentification;
+import org.fao.gift.common.dto.MainConfig;
 import org.fao.gift.common.dto.User;
 import org.fao.gift.common.utils.D3SClient;
 
@@ -14,15 +15,13 @@ public class NotificationLogic {
     private static final String D3S_BASEURL = "gift.d3s.url";
 
     @Inject D3SClient d3SClient;
+    @Inject MainConfig config;
 
 
-    public <T extends MeIdentification> org.fao.fenix.commons.msd.dto.templates.identification.MeIdentification insertMetadata(org.fao.gift.common.dto.User user, T metadata) throws Exception {
+    public Response insertMetadata(org.fao.gift.common.dto.User user,MeIdentification metadata) throws Exception {
 
-        //Response response = d3SClient.insertMetadata(config.get(D3S_BASEURL), metadata);
+      return d3SClient.insertMetadata(config.get(D3S_BASEURL), metadata);
 
-        System.out.println("stop");
-
-        return null;
     }
 
     public <T extends MeIdentification> org.fao.fenix.commons.msd.dto.templates.identification.MeIdentification updateMetadata(T metadata) throws Exception {
