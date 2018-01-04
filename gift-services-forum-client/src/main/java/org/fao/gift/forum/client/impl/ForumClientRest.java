@@ -124,7 +124,7 @@ public class ForumClientRest implements ForumClient {
                     return JsonUtil.resolve(responseString, resourceTreePath);
 
                 default:
-                    throw new RuntimeException(String.valueOf(response.getStatus()));
+                    throw new Exception(responseString);
             }
 
         } catch (Exception e) {

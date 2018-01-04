@@ -6,10 +6,10 @@ package org.fao.gift.config.email;
  */
 public enum MailTemplate {
 
-    DS_DOWNLOAD("FAO/WHO GIFT microdata download"),
-    MD_CREATION("FAO/WHO GIFT metadata creation"),
-    MD_DOWNLOAD("FAO/WHO GIFT metadata download"),
-    MD_UPDATE("FAO/WHO GIFT metadata update");
+    ds_download("FAO/WHO GIFT microdata download"),
+    md_creation("FAO/WHO GIFT metadata creation"),
+    md_download("FAO/WHO GIFT metadata download"),
+    md_update("FAO/WHO GIFT metadata update");
 
     private String mailSubject;
 

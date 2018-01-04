@@ -13,27 +13,24 @@ import javax.ws.rs.core.Response;
 public class NotificationLogic {
 
     private static final String D3S_BASEURL = "gift.d3s.url";
-
     @Inject D3SClient d3SClient;
     @Inject MainConfig config;
 
 
-    public Response insertMetadata(org.fao.gift.common.dto.User user,MeIdentification metadata) throws Exception {
-
+    public Response insertMetadata(MeIdentification metadata) throws Exception {
       return d3SClient.insertMetadata(config.get(D3S_BASEURL), metadata);
-
     }
 
-    public <T extends MeIdentification> org.fao.fenix.commons.msd.dto.templates.identification.MeIdentification updateMetadata(T metadata) throws Exception {
-        return null;
+    public Response updateMetadata(MeIdentification metadata) throws Exception {
+        return d3SClient.updateMetadata(config.get(D3S_BASEURL), metadata);
     }
 
-    public String deleteMetadataByUID(String uid) throws Exception {
-        return null;
+    public Response deleteMetadataByUID(String uid) throws Exception {
+        return d3SClient.deleteMetadata(config.get(D3S_BASEURL), uid, null);
     }
 
-    public String deleteMetadata(String uid, String version) throws Exception {
-        return null;
+    public Response deleteMetadata(String uid, String version) throws Exception {
+        return d3SClient.deleteMetadata(config.get(D3S_BASEURL), uid, version);
     }
 
 }

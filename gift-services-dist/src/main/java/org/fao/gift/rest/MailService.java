@@ -85,7 +85,7 @@ public class MailService {
             disclaimerContent = "";
         }
 
-        sendMail(MailTemplate.DS_DOWNLOAD, email, name, surveyTitle, disclaimerContent);
+        sendMail(MailTemplate.ds_download, email, name, surveyTitle, disclaimerContent);
     }
 
 

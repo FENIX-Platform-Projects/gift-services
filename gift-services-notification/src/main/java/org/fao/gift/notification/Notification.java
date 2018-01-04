@@ -1,5 +1,7 @@
 package org.fao.gift.notification;
 
+import org.fao.fenix.commons.msd.dto.full.MeIdentification;
+
 import javax.xml.registry.infomodel.User;
 
 public interface Notification {
