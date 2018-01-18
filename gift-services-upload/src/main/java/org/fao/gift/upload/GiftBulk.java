@@ -71,7 +71,7 @@ public class GiftBulk implements PostUpload {
         try {
             File file = fileManager.saveFile(tmpFolder, "survey_" + surveyCode + ".zip", zipFileInput);
 
-            //Unzip file into newly created folder
+            //Unzip file in the just created folder
             Map<Files, File> recognizedFilesMap = fileManager.unzip(tmpFolder, new FileInputStream(file));
 
             //Check all needed files are present

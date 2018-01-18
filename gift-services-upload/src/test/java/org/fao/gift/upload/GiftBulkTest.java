@@ -39,7 +39,7 @@ public class GiftBulkTest {
 
     @Test
     public void testBol() throws Exception {
-        giftBulkManager.mainLogic("D3S_21794061232325714207020886619909608751", this.getClass().getResourceAsStream("/test/Bolivia.zip"));
+        giftBulkManager.mainLogic("D3S_21794061232325714207020886619909608751", this.getClass().getResourceAsStream("/test/Bolivia_2.zip"));
     }
 
 
