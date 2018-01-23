@@ -21,9 +21,9 @@ import javax.ws.rs.core.Response;
 import static org.fao.gift.services.UserLogic.normalizeUsername;
 
 @Path("msd/resources")
-public class NotificationService implements NotificationSpi {
+public class ResourceService implements NotificationSpi {
 
-    private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
+    private static final Logger log = LoggerFactory.getLogger(ResourceService.class);
 
     @Inject NotificationLogic notificationLogic;
     @Inject UserLogic userLogic;
@@ -37,17 +37,25 @@ public class NotificationService implements NotificationSpi {
     @Override
     public <T extends MeIdentification> Response insertMetadata(MeWithUser meForum) throws Exception {
         // Get user and metadata
+        log.info("insertMetadata - START - {}", meForum);
+
         User user = meForum.getUser();
+        log.info("insertMetadata - user - {}", user);
+
         MeIdentification metadata = meForum.getMetadata();
-        log.info("insertMetadata - START - {}", user);
+        log.info("insertMetadata - metadata - {}", metadata);
+
 
         // check parameters
+        log.info("checking Parameters");
         checkParameters(meForum);
 
         // Normalize username for special characters
+        log.info("Normalize username for special characters ");
         normalizeUsername(user);
 
         User existingUser = userLogic.getUser(user.getUsername());
+        log.info("getExistingUser - {}", existingUser);
 
         long userForumId;
         // create user if he doesn't exist
@@ -55,7 +63,7 @@ public class NotificationService implements NotificationSpi {
 
             // create user in the forum
             userForumId = forumClient.createUser(user.getUsername(), user.getEmail());
-            log.info("user forum Id ",userForumId);
+            log.info("create forum Id ",userForumId);
 
             // set forumID and create user in our db
             user.setForumId(userForumId);
@@ -64,6 +72,8 @@ public class NotificationService implements NotificationSpi {
 
         } else {
             userForumId = existingUser.getForumId();
+            log.info("existing user forum id: "+userForumId);
+
         }
 
         Response response = notificationLogic.insertMetadata(metadata);
@@ -81,18 +91,20 @@ public class NotificationService implements NotificationSpi {
             log.info("topic Id", topicId);
 
             // Set privileges to the owner
+            log.info("setOwner where user Forum Id: "+userForumId + " and category ID is "+categoryId);
             forumClient.setOwner(categoryId, userForumId);
 
 
             String uid = JsonUtil.resolve(jsonResponse, "uid").asText();
+            log.info("UID from D3S is : "+uid);
 
             // Save the user-survey association on the DB
+            log.info("create user-survey association on the DB");
             surveyLogic.create(uid, categoryId, userForumId, topicId);
-
-            log.info("starting sending email asynchrously");
 
 
             //Send an email for the creation of the metadata
+            log.info("starting sending email asynchrously");
             mailService.sendMail(MailTemplate.md_download, user.getEmail(), user.getName(), uid);
             return Response.ok(jsonResponse).build();
         }
@@ -106,7 +118,7 @@ public class NotificationService implements NotificationSpi {
         // Get user and metadata
         User user = meForum.getUser();
         MeIdentification metadata = meForum.getMetadata();
-        log.info("insertMetadata - START - {}", user);
+        log.info("updateMetadata - START - {}", user);
 
         // check parameters
         checkParameters(meForum);
@@ -115,28 +127,33 @@ public class NotificationService implements NotificationSpi {
 
         //get user from forum
         User existingUser = userLogic.getUser(user.getUsername());
+        log.info("existingUser - existingUser - {}", existingUser);
         if (existingUser == null)
             throw new Exception("this user "+user.getUsername()+" has not been registered");
-
-
         Response response = notificationLogic.updateMetadata(metadata);
 
         String jsonResponse = response.readEntity(String.class);
+        log.info("response  from D3s - {}" + response);
+
         if (Response.Status.OK.getStatusCode() == response.getStatus() || Response.Status.CREATED.getStatusCode() == response.getStatus()) {
             // Take survey from forum logic
             Survey survey = surveyLogic.getSurvey(metadata.getUid());
+            log.info("survey from forum logic - {}" , survey);
 
             if(survey == null)
                 throw new Exception("this survey "+metadata.getTitle()+" has not been saved");
 
             long topicId = survey.getDefaultTopicId();
+            log.info("topicId from forum logic - {}" , topicId);
 
             // send message on forum
             forumClient.createPost(topicId, "The user "+existingUser.getUsername()+ " has modified some metadata fields");
+            log.info("updateMetadata - END - {}");
 
             //Rebuild the response
             return Response.ok(jsonResponse).build();
         }
+        log.info("some errors have been found on the D3S response" , response);
 
         return Response.status(response.getStatus()).entity(jsonResponse).build();
     }
@@ -149,11 +166,13 @@ public class NotificationService implements NotificationSpi {
 
     @Override
     public Response deleteMetadataByUID(String uid) throws Exception {
+        log.info("deleteMetadataByUID - START - {}");
         return notificationLogic.deleteMetadataByUID(uid);
     }
 
     @Override
     public Response deleteMetadata(String uid, String version) throws Exception {
+        log.info("deleteMetadata - START - {}");
         return  notificationLogic.deleteMetadata(uid, version);
     }
 

@@ -107,7 +107,7 @@ public class UserDao extends Dao {
     }
 
     /**
-     * Retrieves all the user info
+     * Retrieves all the users info
      *
      * @return a list of existing {@link User}
      * @throws SQLException in case of problems with the DB
