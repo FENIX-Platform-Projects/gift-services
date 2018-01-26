@@ -3,6 +3,7 @@
 *.iml
 *.lst
 *.jar
+/target/*
 
 
 
@@ -10,4 +11,3 @@
 
 /gift-services-dist/src/main/resources/org/fao/gift/config/main.properties
 /gift-services-dist/src/main/resources/org/fao/gift/config/upload.properties
-/gift-services.iml

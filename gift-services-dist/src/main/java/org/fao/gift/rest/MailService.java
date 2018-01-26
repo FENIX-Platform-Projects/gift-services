@@ -42,14 +42,11 @@ public class MailService {
     @Resource(name = "java:/gift_mail")
     private Session session;
 
-    @Inject
-    MainConfig config;
+    @Inject MainConfig config;
 
-    @Inject
-    private MailTemplateManager mailTemplateManager;
+    @Inject private MailTemplateManager mailTemplateManager;
 
-    @Inject
-    private DisclaimerLogic disclaimerLogic;
+    @Inject private DisclaimerLogic disclaimerLogic;
 
     @SuppressWarnings("unused")
     public MailService() {

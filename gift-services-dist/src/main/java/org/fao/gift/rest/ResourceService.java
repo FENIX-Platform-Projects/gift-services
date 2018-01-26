@@ -1,5 +1,7 @@
 package org.fao.gift.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.Authorization;
 import org.fao.fenix.commons.msd.dto.full.MeIdentification;
 import org.fao.gift.common.dto.MeWithUser;
 import org.fao.gift.common.dto.Survey;
@@ -19,7 +21,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 import static org.fao.gift.services.UserLogic.normalizeUsername;
-
 @Path("msd/resources")
 public class ResourceService implements NotificationSpi {
 
@@ -39,16 +40,19 @@ public class ResourceService implements NotificationSpi {
         // Get user and metadata
         log.info("insertMetadata - START - {}", meForum);
 
+        // check all parameters
+        log.info("checking Parameters");
+        checkParameters(meForum);
+
         User user = meForum.getUser();
+        log.info("checking user attributes");
+        checkUserAttributes(user);
         log.info("insertMetadata - user - {}", user);
 
         MeIdentification metadata = meForum.getMetadata();
+        log.info("checking metadata attributes");
+        checkMetadataAttributes(metadata);
         log.info("insertMetadata - metadata - {}", metadata);
-
-
-        // check parameters
-        log.info("checking Parameters");
-        checkParameters(meForum);
 
         // Normalize username for special characters
         log.info("Normalize username for special characters ");
@@ -114,14 +118,23 @@ public class ResourceService implements NotificationSpi {
 
     @Override
     public <T extends MeIdentification> Response updateMetadata(MeWithUser meForum) throws Exception {
-
-        // Get user and metadata
-        User user = meForum.getUser();
-        MeIdentification metadata = meForum.getMetadata();
-        log.info("updateMetadata - START - {}", user);
+        log.info("updateMetadata - START - {}");
 
         // check parameters
         checkParameters(meForum);
+
+        // Get user and metadata and check attributes
+        User user = meForum.getUser();
+        log.info("checking user attributes");
+        checkUserAttributes(user);
+        log.info("insertMetadata - user - {}", user);
+
+
+        MeIdentification metadata = meForum.getMetadata();
+        log.info("checking metadata attributes");
+        checkMetadataAttributes(metadata);
+        log.info("insertMetadata - metadata - {}", metadata);
+
         if(meForum.getMetadata().getUid() == null)
             throw new Exception("Error: metadata without uid");
 
@@ -179,9 +192,30 @@ public class ResourceService implements NotificationSpi {
 
     // Utils
     private void checkParameters (MeWithUser meForum) {
+        if(meForum == null)
+            throw new IllegalArgumentException("missing user and metadata info");
         if (meForum.getUser() == null || meForum.getUser().getUsername() == null)
             throw new IllegalArgumentException("missing user's mandatory info");
         if (meForum.getMetadata() == null )
             throw new IllegalArgumentException("missing metadata mandatory info");
+    }
+
+    private void checkUserAttributes (User user) {
+        if(user.getName() == null)
+            throw new IllegalArgumentException("Name is mandatory for the user");
+        if(user.getUsername() == null)
+            throw new IllegalArgumentException("Username is mandatory for the user");
+        if(user.getEmail() == null)
+            throw new IllegalArgumentException("Email is mandatory for the user");
+        if(user.getRole() == null)
+            throw new IllegalArgumentException("Role is mandatory for the user");
+        if(user.getInstitution() == null)
+            throw new IllegalArgumentException("Institution is mandatory for the user");
+    }
+
+    private void checkMetadataAttributes (MeIdentification metadata) {
+
+        if(metadata.getTitle() == null)
+            throw new IllegalArgumentException("Title is mandatory into the metadata");
     }
 }
