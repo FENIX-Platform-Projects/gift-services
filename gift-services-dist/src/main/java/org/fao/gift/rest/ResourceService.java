@@ -22,6 +22,8 @@ import javax.ws.rs.core.Response;
 
 import static org.fao.gift.services.UserLogic.normalizeUsername;
 @Path("msd/resources")
+@Api(value = "metadata")
+
 public class ResourceService implements NotificationSpi {
 
     private static final Logger log = LoggerFactory.getLogger(ResourceService.class);

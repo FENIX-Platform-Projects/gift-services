@@ -23,7 +23,8 @@ public class Initializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
-            config.init(this.getClass().getResourceAsStream("/org/fao/gift/config/main.properties"));
+            if(config == null)
+                config.init(this.getClass().getResourceAsStream("/org/fao/gift/config/main.properties"));
             log.info("config init!!!");
             uploaderConfig.init(this.getClass().getResourceAsStream("/org/fao/gift/config/upload.properties"));
             dataSource.init(config.get("gift.db.url"),config.get("gift.db.usr"),config.get("gift.db.psw"));

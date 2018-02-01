@@ -72,16 +72,15 @@
 <script>
 window.onload = function() {
 
-    var url;
+   /* var url;
     if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
     } else {
         url = "http://localhost:8080/gift/v1/swagger.json";
-    }
+    }*/
   
   // Build a system
   const ui = SwaggerUIBundle({
-    url: url,
     dom_id: '#swagger-ui',
     deepLinking: true,
     presets: [

@@ -16,10 +16,15 @@ public class ServiceRegistry extends Application {
     private static final String DEFAULT_HOST="localhost:8080";
     private static final String DEFAULT_BASEPATH="/gift/v1";
 
+    private static final String DEFAULT_MAIN_PATH="/org/fao/gift/config/main.properties";
+
     @Inject MainConfig config;
 
     public ServiceRegistry() {
         try {
+            if(config !=null) {
+                config.init(this.getClass().getResourceAsStream(DEFAULT_MAIN_PATH));
+            }
             init();
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,11 +36,26 @@ public class ServiceRegistry extends Application {
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setVersion("1.0.2");
         beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setHost(config==null || config.size() ==0 ? DEFAULT_HOST: config.get("application.host").toString()+":"+config.get("application.host").toString());
+        beanConfig.setHost(config==null || config.size() ==0 ?
+                DEFAULT_HOST:
+                checkAndQueries("application.host","application.port") ?
+                        DEFAULT_HOST:
+                        config.get("application.host").toString()+":"+config.get("application.port").toString());
         beanConfig.setBasePath(config==null || config.size() ==0 ? DEFAULT_BASEPATH: config.get("application.basePath"));
         beanConfig.setResourcePackage(ResourceService.class.getPackage().getName());
         beanConfig.setTitle("RESTEasy, Swagger and Swagger UI Example");
         beanConfig.setDescription("Sample RESTful API built using RESTEasy, Swagger and Swagger UI");
         beanConfig.setScan(true);
+    }
+
+
+    private boolean checkAndQueries (String... parameters) {
+        if (config==null || parameters == null || parameters.length==0)
+            return false;
+        // return true if all parameters are true
+        for(String parameter : parameters)
+            if(config.get(parameter) == null)
+                return false;
+        return true;
     }
 }
