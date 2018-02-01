@@ -14,7 +14,7 @@ public interface StatisticsSpi {
 
     @POST
     @Path("/filter")
-    @ApiOperation(value = "Filter metadata fenix",
+    @ApiOperation(value = "Filtering metadata based on parameters",
             notes = "Filter gift metadata",
             response = Collection.class,
             responseContainer = "Object")
@@ -23,7 +23,7 @@ public interface StatisticsSpi {
 
     @POST
     @Path("/filter")
-    @ApiOperation(value = "Filter metadata fenix",
+    @ApiOperation(value = "Filtering metadata based on parameters and user",
             notes = "Filter gift metadata on user ",
             response = Collection.class,
             responseContainer = "Object")
