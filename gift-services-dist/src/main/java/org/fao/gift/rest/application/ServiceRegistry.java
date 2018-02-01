@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import java.util.Map;
 
 
 @ApplicationPath("/v1")
@@ -22,6 +23,7 @@ public class ServiceRegistry extends Application {
 
     public ServiceRegistry() {
         try {
+            testEnv();
             if(config !=null) {
                 config.init(this.getClass().getResourceAsStream(DEFAULT_MAIN_PATH));
             }
@@ -58,4 +60,14 @@ public class ServiceRegistry extends Application {
                 return false;
         return true;
     }
+
+    private void testEnv () {
+        Map<String, String> env = System.getenv();
+
+        if(env!= null && !env.isEmpty() && env.size()>0)
+            for (String envName : env.keySet())
+                    if(envName.equals("GIFT_SERVICES_ENV"))
+                        System.out.format("%s=%s%n",envName,env.get(envName));
+            }
+
 }
